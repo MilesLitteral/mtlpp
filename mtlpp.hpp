@@ -28,7 +28,7 @@
 #endif
 
 #ifndef MTLPP_CONFIG_VALIDATE
-#   define MTLPP_CONFIG_VALIDATE 1
+#   define MTLPP_CONFIG_VALIDATE 0 //1
 #endif
 
 #ifndef MTLPP_CONFIG_USE_AVAILABILITY
