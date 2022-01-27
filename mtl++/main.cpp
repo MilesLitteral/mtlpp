@@ -22,10 +22,11 @@ void mtlAddArrays(const float* inA,
     }
 }
 
+
 class MetalAdder
 {
     public:
-        mtlpp::Device _mDevice;
+        mtlpp::Device _mDevice = mtlpp::Device::CreateDefaultSystemDevice();
 
         // The compute pipeline generated from the compute kernel in the .metal shader file.
         mtlpp::ComputePipelineState _mAddFunctionPSO;
