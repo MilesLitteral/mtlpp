@@ -2283,7 +2283,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         // Error
         NSError* nsError = NULL;
-        NSError** nsErrorPtr = error ? &nsError : nullptr;
+        NSError** nsErrorPtr = error ? &nsError : nullptr; //__autoreleasing
 
         id<MTLFunction> function = [(__bridge id<MTLLibrary>)m_ptr newFunctionWithName:(__bridge NSString*)functionName.GetPtr()
                                                                         constantValues:(__bridge MTLFunctionConstantValues*)constantValues.GetPtr()

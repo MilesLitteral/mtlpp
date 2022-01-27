@@ -1,12 +1,12 @@
 #include <stddef.h>
-#include "../../mtlpp.hpp"
+#include "mtlpp.hpp"
 
 const unsigned int arrayLength = 1 << 24;
 const unsigned int bufferSize = arrayLength * sizeof(float);
 
 //using namespace mtlpp::ResourceOptions;
-//remember to add a .metal filea
-mtlpp::Function mtlAddArrays(const float* inA,
+//remember to add a .metal file
+void mtlAddArrays(const float* inA,
                 const float* inB,
                 float* result,
                 int length)
@@ -35,18 +35,18 @@ class MetalAdder
 
     MetalAdder(mtlpp::Device device)
     {
+        _mDevice = device;
+        std::runtime_error* error = NULL;
 
-            _mDevice = device;
-            std::runtime_error* error = NULL;
+        // Load the shader files with a .metal file extension in the project
 
-            // Load the shader files with a .metal file extension in the project
+        mtlpp::Library defaultLibrary = device.NewDefaultLibrary();
+        mtlpp::Function addFunction = defaultLibrary.NewFunction("mtlAddArrays");
 
-            mtlpp::Library defaultLibrary = device.NewDefaultLibrary();
-            mtlpp::Function addFunction = defaultLibrary.NewFunction("mtlAddArrays");
-
-            // Create a compute pipeline state object.
-            device.NewComputePipelineState(addFunction, (_mAddFunctionPSO, error));
-            _mCommandQueue = device.NewCommandQueue();
+        // Create a compute pipeline state object.
+        //_mAddFunctionPSO = device.NewComputePipelineState(addFunction, error);
+    
+        _mCommandQueue = device.NewCommandQueue();
     }
 
 
