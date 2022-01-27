@@ -486,8 +486,9 @@ namespace mtlpp
     }
     MTLPP_AVAILABLE(10_11, 9_0);
     }
-
-    enum class ResourceOptions
+    
+    namespace ResourceOptions {
+    enum ResourceOptions
     {
         CpuCacheModeDefaultCache                                = uint32_t(CpuCacheMode::DefaultCache)  << ResourceCpuCacheModeShift,
         CpuCacheModeWriteCombined                               = uint32_t(CpuCacheMode::WriteCombined) << ResourceCpuCacheModeShift,
@@ -502,7 +503,8 @@ namespace mtlpp
         OptionCpuCacheModeWriteCombined                         = CpuCacheModeWriteCombined,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
-
+    }
+    
     class Resource : public ns::Object
     {
     public:
@@ -678,7 +680,7 @@ namespace mtlpp
         uint32_t        GetMipmapLevelCount() const;
         uint32_t        GetSampleCount() const;
         uint32_t        GetArrayLength() const;
-        ResourceOptions GetResourceOptions() const;
+        ResourceOptions::ResourceOptions GetResourceOptions() const;
         CpuCacheMode::CpuCacheMode    GetCpuCacheMode() const MTLPP_AVAILABLE(10_11, 9_0);
         StorageMode::StorageMode     GetStorageMode() const MTLPP_AVAILABLE(10_11, 9_0);
         TextureUsage    GetUsage() const MTLPP_AVAILABLE(10_11, 9_0);
@@ -691,7 +693,7 @@ namespace mtlpp
         void SetMipmapLevelCount(uint32_t mipmapLevelCount);
         void SetSampleCount(uint32_t sampleCount);
         void SetArrayLength(uint32_t arrayLength);
-        void SetResourceOptions(ResourceOptions resourceOptions);
+        void SetResourceOptions(ResourceOptions::ResourceOptions resourceOptions);
         void SetCpuCacheMode(CpuCacheMode::CpuCacheMode cpuCacheMode) MTLPP_AVAILABLE(10_11, 9_0);
         void SetStorageMode(StorageMode::StorageMode storageMode) MTLPP_AVAILABLE(10_11, 9_0);
         void SetUsage(TextureUsage usage) MTLPP_AVAILABLE(10_11, 9_0);
@@ -1559,8 +1561,9 @@ namespace mtlpp
     }
     MTLPP_AVAILABLE(10_11, 9_0);
     }
-
-    enum class ResourceOptions
+    
+    namespace ResourceOptions{
+    enum ResourceOptions
     {
         CpuCacheModeDefaultCache                                = uint32_t(CpuCacheMode::DefaultCache)  << ResourceCpuCacheModeShift,
         CpuCacheModeWriteCombined                               = uint32_t(CpuCacheMode::WriteCombined) << ResourceCpuCacheModeShift,
@@ -1575,7 +1578,8 @@ namespace mtlpp
         OptionCpuCacheModeWriteCombined                         = CpuCacheModeWriteCombined,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
-
+    }
+    
     class Resource : public ns::Object
     {
     public:
@@ -1751,7 +1755,7 @@ namespace mtlpp
         uint32_t        GetMipmapLevelCount() const;
         uint32_t        GetSampleCount() const;
         uint32_t        GetArrayLength() const;
-        ResourceOptions GetResourceOptions() const;
+        ResourceOptions::ResourceOptions GetResourceOptions() const;
         CpuCacheMode::CpuCacheMode    GetCpuCacheMode() const MTLPP_AVAILABLE(10_11, 9_0);
         StorageMode::StorageMode     GetStorageMode() const MTLPP_AVAILABLE(10_11, 9_0);
         TextureUsage    GetUsage() const MTLPP_AVAILABLE(10_11, 9_0);
@@ -1764,7 +1768,7 @@ namespace mtlpp
         void SetMipmapLevelCount(uint32_t mipmapLevelCount);
         void SetSampleCount(uint32_t sampleCount);
         void SetArrayLength(uint32_t arrayLength);
-        void SetResourceOptions(ResourceOptions resourceOptions);
+        void SetResourceOptions(ResourceOptions::ResourceOptions resourceOptions);
         void SetCpuCacheMode(CpuCacheMode::CpuCacheMode cpuCacheMode) MTLPP_AVAILABLE(10_11, 9_0);
         void SetStorageMode(StorageMode::StorageMode storageMode) MTLPP_AVAILABLE(10_11, 9_0);
         void SetUsage(TextureUsage usage) MTLPP_AVAILABLE(10_11, 9_0);
@@ -2250,11 +2254,11 @@ namespace mtlpp
         CommandQueue NewCommandQueue();
         CommandQueue NewCommandQueue(uint32_t maxCommandBufferCount);
         SizeAndAlign HeapTextureSizeAndAlign(const TextureDescriptor& desc) MTLPP_AVAILABLE(NA, 10_0);
-        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
+        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions::ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
         Heap NewHeap(const HeapDescriptor& descriptor) MTLPP_AVAILABLE(NA, 10_0);
-        Buffer NewBuffer(uint32_t length, ResourceOptions options);
-        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions options);
-        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
+        Buffer NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options);
+        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions::ResourceOptions options);
+        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions::ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
         DepthStencilState NewDepthStencilState(const DepthStencilDescriptor& descriptor);
         Texture NewTexture(const TextureDescriptor& descriptor);
         //- (id <MTLTexture>)newTextureWithDescriptor:(MTLTextureDescriptor *)descriptor iosurface:(IOSurfaceRef)iosurface plane:(NSUInteger)plane NS_AVAILABLE_MAC(10_11);
@@ -3761,7 +3765,7 @@ namespace mtlpp
         void SetLabel(const ns::String& label);
 
         uint32_t MaxAvailableSizeWithAlignment(uint32_t alignment);
-        Buffer NewBuffer(uint32_t length, ResourceOptions options);
+        Buffer NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options);
         Texture NewTexture(const TextureDescriptor& desc);
         PurgeableState SetPurgeableState(PurgeableState state);
     }
@@ -3900,11 +3904,11 @@ namespace mtlpp
         CommandQueue NewCommandQueue();
         CommandQueue NewCommandQueue(uint32_t maxCommandBufferCount);
         SizeAndAlign HeapTextureSizeAndAlign(const TextureDescriptor& desc) MTLPP_AVAILABLE(NA, 10_0);
-        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
+        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions::ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
         Heap NewHeap(const HeapDescriptor& descriptor) MTLPP_AVAILABLE(NA, 10_0);
-        Buffer NewBuffer(uint32_t length, ResourceOptions options);
-        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions options);
-        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
+        Buffer NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options);
+        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions::ResourceOptions options);
+        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions::ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
         DepthStencilState NewDepthStencilState(const DepthStencilDescriptor& descriptor);
         Texture NewTexture(const TextureDescriptor& descriptor);
         //- (id <MTLTexture>)newTextureWithDescriptor:(MTLTextureDescriptor *)descriptor iosurface:(IOSurfaceRef)iosurface plane:(NSUInteger)plane NS_AVAILABLE_MAC(10_11);
@@ -5387,12 +5391,12 @@ namespace mtlpp
         HeapDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
         uint32_t     GetSize() const;
-        StorageMode  GetStorageMode() const;
-        CpuCacheMode GetCpuCacheMode() const;
+        StorageMode::StorageMode  GetStorageMode() const;
+        CpuCacheMode::CpuCacheMode GetCpuCacheMode() const;
 
         void SetSize(uint32_t size) const;
-        void SetStorageMode(StorageMode storageMode) const;
-        void SetCpuCacheMode(CpuCacheMode cpuCacheMode) const;
+        void SetStorageMode(StorageMode::StorageMode storageMode) const;
+        void SetCpuCacheMode(CpuCacheMode::CpuCacheMode cpuCacheMode) const;
     }
     MTLPP_AVAILABLE(NA, 10_0);
 
@@ -5411,7 +5415,7 @@ namespace mtlpp
         void SetLabel(const ns::String& label);
 
         uint32_t MaxAvailableSizeWithAlignment(uint32_t alignment);
-        Buffer NewBuffer(uint32_t length, ResourceOptions options);
+        Buffer NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options);
         Texture NewTexture(const TextureDescriptor& desc);
         PurgeableState SetPurgeableState(PurgeableState state);
     }
