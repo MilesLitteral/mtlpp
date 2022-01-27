@@ -77,11 +77,11 @@ class MetalAdder
         // Create a command buffer to hold commands.
         
         mtlpp::CommandBuffer commandBuffer = commandQueue.CommandBuffer();
-        assert(commandBuffer != NULL);
+        //assert(commandBuffer != NULL);
 
         // Start a compute pass.
         mtlpp::ComputeCommandEncoder computeEncoder = mtlpp::ComputeCommandEncoder(computeEncoder);// computeCommandEncoder];
-        assert(computeEncoder != NULL);
+        //assert(computeEncoder != NULL);
 
         encodeAddCommand(computeEncoder);
         // End the compute pass.
