@@ -164,12 +164,12 @@ namespace ns
 
         const T operator[](uint32_t index) const
         {
-            return Handle{ GetItem(index) };
+            return Handle(GetItem(index));
         }
 
         T operator[](uint32_t index)
         {
-            return Handle{ GetItem(index) };
+            return Handle(GetItem(index));
         }
     };
 
