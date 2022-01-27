@@ -74,13 +74,15 @@ class MetalAdder
             vOut[id] = vIn[id] * vIn[id];
         }
     )""";
-
+    
+    ns::Error* error = NULL; //nullptr
+      
     mtlpp::Library library = device.NewLibrary(shadersSrc, mtlpp::CompileOptions(), nullptr);
     assert(library);
     mtlpp::Function sqrFunc = library.NewFunction("sqr");
     assert(sqrFunc);
 
-    mtlpp::ComputePipelineState computePipelineState = device.NewComputePipelineState(sqrFunc, nullptr);
+    mtlpp::ComputePipelineState computePipelineState = device.NewComputePipelineState(sqrFunc, error);
     assert(computePipelineState);
 
     mtlpp::CommandQueue commandQueue = device.NewCommandQueue();
