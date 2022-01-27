@@ -15,8 +15,9 @@ build_experiment()
 
     clang++ $objcflags -c ../mtlpp.mm -o $output/mtlpp.o
     clang++ $cppflags $ldflags ../mtl++/main.cpp $output/mtlpp.o -o $output/metalAdder
+    xcrun -sdk macosx metal -c ../mtl++/add.metal -o ../mtl++/add.air
+    xcrun -sdk macosx metallib ../mtl++/add.air -o $output/add.metallib
+    echo "Complete Build: Experiment"
 }
 
     build_experiment 10.12
-    echo "Complete Build: Experiment"
-

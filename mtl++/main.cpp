@@ -1,16 +1,21 @@
 #include <stddef.h>
+#include <string>
+#include <filesystem>
 #include "../mtlpp.hpp"
 
 const unsigned int arrayLength = 10; //1 << 24;
 const unsigned int bufferSize = arrayLength * sizeof(float);
 
-//using namespace mtlpp::ResourceOptions;
-//remember to add a .metal file
+//xcrun -sdk macosx metal -c add.metal -o add.air
+//xcrun -sdk macosx metallib add.air -o add.metallib
+
+
 void mtlAddArrays(const float* inA,
                 const float* inB,
                 float* result,
                 int length)
 {
+    printf("METAL");
     for (int index = 0; index < length ; index++)
     {
         result[index] = inA[index] + inB[index];
@@ -36,15 +41,20 @@ class MetalAdder
     MetalAdder(mtlpp::Device device)
     {
         _mDevice = device;
-        std::runtime_error* error = NULL;
+        ns::Error* error = NULL;
 
         // Load the shader files with a .metal file extension in the project
 
-        mtlpp::Library defaultLibrary = device.NewDefaultLibrary();
+        mtlpp::Library defaultLibrary = device.NewLibrary("/Users/sasori/Desktop/mtl++/mtl++/mtl++/add.metallib", error);//device.NewDefaultLibrary();
+        if (defaultLibrary.GetFunctionNames() == NULL)
+        {
+            printf("Failed to find the default library.\n");
+
+        }
         mtlpp::Function addFunction = defaultLibrary.NewFunction("mtlAddArrays");
 
         // Create a compute pipeline state object.
-        //_mAddFunctionPSO = device.NewComputePipelineState(addFunction, error);
+        _mAddFunctionPSO = device.NewComputePipelineState(addFunction, error);
     
         _mCommandQueue = device.NewCommandQueue();
     }
@@ -77,7 +87,7 @@ class MetalAdder
         // Create a command buffer to hold commands.
         mtlpp::CommandBuffer commandBuffer = commandQueue.CommandBuffer();
         // Start a compute pass.
-        mtlpp::ComputeCommandEncoder computeEncoder = mtlpp::ComputeCommandEncoder();// computeCommandEncoder];
+        mtlpp::ComputeCommandEncoder computeEncoder = commandBuffer.ComputeCommandEncoder();// computeCommandEncoder];
 
         encodeAddCommand(computeEncoder);
         // End the compute pass.
@@ -131,6 +141,10 @@ class MetalAdder
                 printf("Compute ERROR: index=%lu result=%g vs %g=a+b\n",
                     index, result[index], a[index] + b[index]);
                 //assert(result[index] == (a[index] + b[index]));
+            }
+            else{
+                   printf("Compute MATCH: index=%lu result=%g vs %g=a+b\n",
+                    index, result[index], a[index] + b[index]);
             }
         }
         printf("Compute results as expected\n");
