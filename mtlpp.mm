@@ -1272,7 +1272,7 @@ namespace mtlpp
 #endif
     }
 
-    SizeAndAlign Device::HeapBufferSizeAndAlign(uint32_t length, ResourceOptions options)
+    SizeAndAlign Device::HeapBufferSizeAndAlign(uint32_t length, ResourceOptions::ResourceOptions options)
     {
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         MTLSizeAndAlign mtlSizeAndAlign = [(__bridge id<MTLDevice>)m_ptr heapBufferSizeAndAlignWithLength:length options:MTLResourceOptions(options)];
@@ -1291,20 +1291,20 @@ namespace mtlpp
 #endif
     }
 
-    Buffer Device::NewBuffer(uint32_t length, ResourceOptions options)
+    Buffer Device::NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options)
     {
         Validate();
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLDevice>)m_ptr newBufferWithLength:length options:MTLResourceOptions(options)] };
     }
 
-    Buffer Device::NewBuffer(const void* pointer, uint32_t length, ResourceOptions options)
+    Buffer Device::NewBuffer(const void* pointer, uint32_t length, ResourceOptions::ResourceOptions options)
     {
         Validate();
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLDevice>)m_ptr newBufferWithBytes:pointer length:length options:MTLResourceOptions(options)] };
     }
 
 
-    Buffer Device::NewBuffer(void* pointer, uint32_t length, ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator)
+    Buffer Device::NewBuffer(void* pointer, uint32_t length, ResourceOptions::ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator)
     {
         Validate();
         return ns::Handle{
@@ -1786,24 +1786,24 @@ namespace mtlpp
 
     }
 
-    StorageMode HeapDescriptor::GetStorageMode() const
+StorageMode::StorageMode HeapDescriptor::GetStorageMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return StorageMode([(__bridge MTLHeapDescriptor*)m_ptr storageMode]);
 #else
-        return StorageMode(0);
+        return StorageMode::StorageMode(0);
 #endif
 
     }
 
-    CpuCacheMode HeapDescriptor::GetCpuCacheMode() const
+CpuCacheMode::CpuCacheMode HeapDescriptor::GetCpuCacheMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return CpuCacheMode([(__bridge MTLHeapDescriptor*)m_ptr cpuCacheMode]);
 #else
-        return CpuCacheMode(0);
+        return CpuCacheMode::CpuCacheMode(0);
 #endif
 
     }
@@ -1817,7 +1817,7 @@ namespace mtlpp
 
     }
 
-    void HeapDescriptor::SetStorageMode(StorageMode storageMode) const
+    void HeapDescriptor::SetStorageMode(StorageMode::StorageMode storageMode) const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
@@ -1826,7 +1826,7 @@ namespace mtlpp
 
     }
 
-    void HeapDescriptor::SetCpuCacheMode(CpuCacheMode cpuCacheMode) const
+    void HeapDescriptor::SetCpuCacheMode(CpuCacheMode::CpuCacheMode cpuCacheMode) const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
@@ -1857,24 +1857,24 @@ namespace mtlpp
 
     }
 
-    StorageMode Heap::GetStorageMode() const
+StorageMode::StorageMode Heap::GetStorageMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return StorageMode([(__bridge id<MTLHeap>)m_ptr storageMode]);
 #else
-        return StorageMode(0);
+        return StorageMode::StorageMode(0);
 #endif
 
     }
 
-    CpuCacheMode Heap::GetCpuCacheMode() const
+CpuCacheMode::CpuCacheMode Heap::GetCpuCacheMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return CpuCacheMode([(__bridge id<MTLHeap>)m_ptr cpuCacheMode]);
 #else
-        return CpuCacheMode(0);
+        return CpuCacheMode::CpuCacheMode(0);
 #endif
 
     }
@@ -1921,7 +1921,7 @@ namespace mtlpp
 
     }
 
-    Buffer Heap::NewBuffer(uint32_t length, ResourceOptions options)
+    Buffer Heap::NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
@@ -3775,19 +3775,19 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLResource>)m_ptr label] };
     }
 
-    CpuCacheMode Resource::GetCpuCacheMode() const
+CpuCacheMode::CpuCacheMode Resource::GetCpuCacheMode() const
     {
         Validate();
-        return CpuCacheMode([(__bridge id<MTLResource>)m_ptr cpuCacheMode]);
+        return CpuCacheMode::CpuCacheMode([(__bridge id<MTLResource>)m_ptr cpuCacheMode]);
     }
 
-    StorageMode Resource::GetStorageMode() const
+StorageMode::StorageMode Resource::GetStorageMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
-        return StorageMode([(__bridge id<MTLResource>)m_ptr storageMode]);
+        return StorageMode::StorageMode([(__bridge id<MTLResource>)m_ptr storageMode]);
 #else
-        return StorageMode(0);
+        return StorageMode::StorageMode(0);
 #endif
     }
 
@@ -4327,29 +4327,29 @@ namespace mtlpp
         return uint32_t([(__bridge MTLTextureDescriptor*)m_ptr arrayLength]);
     }
 
-    ResourceOptions TextureDescriptor::GetResourceOptions() const
+ResourceOptions::ResourceOptions TextureDescriptor::GetResourceOptions() const
     {
         Validate();
-        return ResourceOptions([(__bridge MTLTextureDescriptor*)m_ptr resourceOptions]);
+        return ResourceOptions::ResourceOptions([(__bridge MTLTextureDescriptor*)m_ptr resourceOptions]);
     }
 
-    CpuCacheMode TextureDescriptor::GetCpuCacheMode() const
+CpuCacheMode::CpuCacheMode TextureDescriptor::GetCpuCacheMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
-        return CpuCacheMode([(__bridge MTLTextureDescriptor*)m_ptr cpuCacheMode]);
+        return CpuCacheMode::CpuCacheMode([(__bridge MTLTextureDescriptor*)m_ptr cpuCacheMode]);
 #else
         return CpuCacheMode(0);
 #endif
     }
 
-    StorageMode TextureDescriptor::GetStorageMode() const
+StorageMode::StorageMode TextureDescriptor::GetStorageMode() const
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
-        return StorageMode([(__bridge MTLTextureDescriptor*)m_ptr storageMode]);
+        return StorageMode::StorageMode([(__bridge MTLTextureDescriptor*)m_ptr storageMode]);
 #else
-        return StorageMode(0);
+        return StorageMode::StorageMode(0);
 #endif
     }
 
@@ -4411,13 +4411,13 @@ namespace mtlpp
         [(__bridge MTLTextureDescriptor*)m_ptr setArrayLength:arrayLength];
     }
 
-    void TextureDescriptor::SetResourceOptions(ResourceOptions resourceOptions)
+    void TextureDescriptor::SetResourceOptions(ResourceOptions::ResourceOptions resourceOptions)
     {
         Validate();
         [(__bridge MTLTextureDescriptor*)m_ptr setResourceOptions:MTLResourceOptions(resourceOptions)];
     }
 
-    void TextureDescriptor::SetCpuCacheMode(CpuCacheMode cpuCacheMode)
+    void TextureDescriptor::SetCpuCacheMode(CpuCacheMode::CpuCacheMode cpuCacheMode)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
@@ -4425,7 +4425,7 @@ namespace mtlpp
 #endif
     }
 
-    void TextureDescriptor::SetStorageMode(StorageMode storageMode)
+    void TextureDescriptor::SetStorageMode(StorageMode::StorageMode storageMode)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
