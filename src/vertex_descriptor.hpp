@@ -10,7 +10,8 @@
 
 namespace mtlpp
 {
-    enum class VertexFormat
+    namespace VertexFormat{
+    enum VertexFormat
     {
         Invalid               = 0,
 
@@ -69,8 +70,10 @@ namespace mtlpp
         UInt1010102Normalized = 41,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
+    }
 
-    enum class VertexStepFunction
+    namespace VertexStepFunction {
+    enum VertexStepFunction
     {
         Constant                                          = 0,
         PerVertex                                         = 1,
@@ -79,7 +82,8 @@ namespace mtlpp
         PerPatchControlPoint MTLPP_AVAILABLE(10_12, 10_0) = 4,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
-
+    }
+    
     class VertexBufferLayoutDescriptor : public ns::Object
     {
     public:
@@ -87,11 +91,11 @@ namespace mtlpp
         VertexBufferLayoutDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
         uint32_t           GetStride() const;
-        VertexStepFunction GetStepFunction() const;
+        VertexStepFunction::VertexStepFunction GetStepFunction() const;
         uint32_t           GetStepRate() const;
 
         void SetStride(uint32_t stride);
-        void SetStepFunction(VertexStepFunction stepFunction);
+        void SetStepFunction(VertexStepFunction::VertexStepFunction stepFunction);
         void SetStepRate(uint32_t stepRate);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
@@ -102,11 +106,11 @@ namespace mtlpp
         VertexAttributeDescriptor();
         VertexAttributeDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
-        VertexFormat GetFormat() const;
+        VertexFormat::VertexFormat GetFormat() const;
         uint32_t     GetOffset() const;
         uint32_t     GetBufferIndex() const;
 
-        void SetFormat(VertexFormat format);
+        void SetFormat(VertexFormat::VertexFormat format);
         void SetOffset(uint32_t offset);
         void SetBufferIndex(uint32_t bufferIndex);
     }

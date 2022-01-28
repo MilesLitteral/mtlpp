@@ -9,24 +9,27 @@ const unsigned int bufferSize = arrayLength * sizeof(float);
 //xcrun -sdk macosx metal -c add.metal -o add.air
 //xcrun -sdk macosx metallib add.air -o add.metallib
 
+//xcrun -sdk macosx metal -c operations.metal -o operations.air
+//xcrun -sdk macosx metallib operations.air -o operations.metallib
 
+//define metal reflections here 
 void mtlAddArrays(const float* inA,
                 const float* inB,
                 float* result,
                 int length)
 {
-    printf("METAL");
     for (int index = 0; index < length ; index++)
     {
         result[index] = inA[index] + inB[index];
     }
 }
 
+//end define Metal Reflections
 
 class MetalAdder
 {
     public:
-        mtlpp::Device _mDevice = mtlpp::Device::CreateDefaultSystemDevice();
+        mtlpp::Device _mDevice = mtlpp::Device::CreateSystemDefaultDevice();
 
         // The compute pipeline generated from the compute kernel in the .metal shader file.
         mtlpp::ComputePipelineState _mAddFunctionPSO;
@@ -59,37 +62,7 @@ class MetalAdder
     
         _mCommandQueue = device.NewCommandQueue();
     }
-    
-    //By Default, Metallib is made at compilation time however this is an alternative test to run const chars as Metal Scripts
-    //Possibly more Important for Futhark
-    void generateMetalLib(const char *src){
-    const char shadersSrc[] = R"""(
-        #include <metal_stdlib>
-        using namespace metal;
-        kernel void sqr(
-            const device float *vIn [[ buffer(0) ]],
-            device float *vOut [[ buffer(1) ]],
-            uint id[[ thread_position_in_grid ]])
-        {
-            vOut[id] = vIn[id] * vIn[id];
-        }
-    )""";
-    
-    ns::Error* error = NULL; //nullptr
-      
-    mtlpp::Library library = device.NewLibrary(shadersSrc, mtlpp::CompileOptions(), nullptr);
-    assert(library);
-    mtlpp::Function sqrFunc = library.NewFunction("sqr");
-    assert(sqrFunc);
 
-    mtlpp::ComputePipelineState computePipelineState = device.NewComputePipelineState(sqrFunc, error);
-    assert(computePipelineState);
-
-    mtlpp::CommandQueue commandQueue = device.NewCommandQueue();
-    assert(commandQueue);
-    
-    }
-  
     void generateRandomFloatData(mtlpp::Buffer buffer)
     {
         float* dataPtr = (float*)buffer.GetContents();
@@ -181,6 +154,33 @@ class MetalAdder
     }
 };
 
+//By Default, Metallib is made at compilation time however this is an alternative test to run const chars as Metal Scripts
+//Possibly more Important for Futhark
+void generateMetalLib(const char *src, mtlpp::Device device){
+const char shadersSrc[] = 
+        "#include <metal_stdlib>";
+        "using namespace metal;";
+        "kernel void sqr(";
+            "const device float *vIn [[ buffer(0) ]],";
+            "device float *vOut [[ buffer(1) ]],";
+            "uint id[[ thread_position_in_grid ]])";
+        "{";
+            "vOut[id] = vIn[id] * vIn[id];";       
+        "}";
+
+    ns::Error* error = NULL; //nullptr
+      
+    mtlpp::Library library  = device.NewLibrary(shadersSrc, mtlpp::CompileOptions(), error);
+    assert(library);
+    mtlpp::Function sqrFunc = library.NewFunction("sqr");
+    assert(sqrFunc);
+
+    mtlpp::ComputePipelineState computePipelineState = device.NewComputePipelineState(sqrFunc, error);
+    assert(computePipelineState);
+
+    mtlpp::CommandQueue commandQueue = device.NewCommandQueue();
+    assert(commandQueue);
+}
 
 int main(int argc, char * argv[]){
         mtlpp::Device device = mtlpp::Device::CreateSystemDefaultDevice();

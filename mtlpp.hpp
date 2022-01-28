@@ -1599,15 +1599,18 @@ namespace mtlpp
     class Texture;
     class Buffer;
 
-    enum class LoadAction
+    namespace LoadAction{
+    enum LoadAction
     {
         DontCare = 0,
         Load     = 1,
         Clear    = 2,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
+    }
 
-    enum class StoreAction
+    namespace StoreAction {
+    enum StoreAction
     {
         DontCare                                               = 0,
         Store                                                  = 1,
@@ -1616,6 +1619,7 @@ namespace mtlpp
         Unknown                    MTLPP_AVAILABLE(10_12,10_0) = 4,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
+    }
 
     enum class MultisampleDepthResolveFilter
     {
@@ -1653,8 +1657,8 @@ namespace mtlpp
         uint32_t    GetResolveLevel() const;
         uint32_t    GetResolveSlice() const;
         uint32_t    GetResolveDepthPlane() const;
-        LoadAction  GetLoadAction() const;
-        StoreAction GetStoreAction() const;
+        LoadAction::LoadAction  GetLoadAction() const;
+        StoreAction::StoreAction GetStoreAction() const;
 
         void SetTexture(const Texture& texture);
         void SetLevel(uint32_t level);
@@ -1664,8 +1668,8 @@ namespace mtlpp
         void SetResolveLevel(uint32_t resolveLevel);
         void SetResolveSlice(uint32_t resolveSlice);
         void SetResolveDepthPlane(uint32_t resolveDepthPlane);
-        void SetLoadAction(LoadAction loadAction);
-        void SetStoreAction(StoreAction storeAction);
+        void SetLoadAction(LoadAction::LoadAction loadAction);
+        void SetStoreAction(StoreAction::StoreAction storeAction);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 
@@ -2106,9 +2110,9 @@ namespace mtlpp
         void SetStencilReferenceValue(uint32_t referenceValue);
         void SetStencilReferenceValue(uint32_t frontReferenceValue, uint32_t backReferenceValue);
         void SetVisibilityResultMode(VisibilityResultMode mode, uint32_t offset);
-        void SetColorStoreAction(StoreAction storeAction, uint32_t colorAttachmentIndex) MTLPP_AVAILABLE(10_12, 10_0);
-        void SetDepthStoreAction(StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
-        void SetStencilStoreAction(StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetColorStoreAction(StoreAction::StoreAction storeAction, uint32_t colorAttachmentIndex) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetDepthStoreAction(StoreAction::StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetStencilStoreAction(StoreAction::StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
         void Draw(PrimitiveType primitiveType, uint32_t vertexStart, uint32_t vertexCount);
         void Draw(PrimitiveType primitiveType, uint32_t vertexStart, uint32_t vertexCount, uint32_t instanceCount) MTLPP_AVAILABLE(10_11, 9_0);
         void Draw(PrimitiveType primitiveType, uint32_t vertexStart, uint32_t vertexCount, uint32_t instanceCount, uint32_t baseInstance) MTLPP_AVAILABLE(10_11, 9_0);
@@ -2529,9 +2533,9 @@ namespace mtlpp
 
         RenderCommandEncoder GetRenderCommandEncoder();
 
-        void SetColorStoreAction(StoreAction storeAction, uint32_t colorAttachmentIndex) MTLPP_AVAILABLE(10_12, 10_0);
-        void SetDepthStoreAction(StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
-        void SetStencilStoreAction(StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetColorStoreAction(StoreAction::StoreAction storeAction, uint32_t colorAttachmentIndex) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetDepthStoreAction(StoreAction::StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetStencilStoreAction(StoreAction::StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 }

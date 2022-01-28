@@ -11,6 +11,7 @@
 
 namespace mtlpp
 {
+    namespace CompareFunction{
     enum class CompareFunction
     {
         Never        = 0,
@@ -23,6 +24,7 @@ namespace mtlpp
         Always       = 7,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
+    }
 
     enum class StencilOperation
     {
@@ -43,14 +45,14 @@ namespace mtlpp
         StencilDescriptor();
         StencilDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
-        CompareFunction  GetStencilCompareFunction() const;
+        CompareFunction::CompareFunction  GetStencilCompareFunction() const;
         StencilOperation GetStencilFailureOperation() const;
         StencilOperation GetDepthFailureOperation() const;
         StencilOperation GetDepthStencilPassOperation() const;
         uint32_t         GetReadMask() const;
         uint32_t         GetWriteMask() const;
 
-        void SetStencilCompareFunction(CompareFunction stencilCompareFunction);
+        void SetStencilCompareFunction(CompareFunction::CompareFunction stencilCompareFunction);
         void SetStencilFailureOperation(StencilOperation stencilFailureOperation);
         void SetDepthFailureOperation(StencilOperation depthFailureOperation);
         void SetDepthStencilPassOperation(StencilOperation depthStencilPassOperation);
@@ -65,13 +67,13 @@ namespace mtlpp
         DepthStencilDescriptor();
         DepthStencilDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
-        CompareFunction   GetDepthCompareFunction() const;
+        CompareFunction::CompareFunction   GetDepthCompareFunction() const;
         bool              IsDepthWriteEnabled() const;
         StencilDescriptor GetFrontFaceStencil() const;
         StencilDescriptor GetBackFaceStencil() const;
         ns::String        GetLabel() const;
 
-        void SetDepthCompareFunction(CompareFunction depthCompareFunction) const;
+        void SetDepthCompareFunction(CompareFunction::CompareFunction depthCompareFunction) const;
         void SetDepthWriteEnabled(bool depthWriteEnabled) const;
         void SetFrontFaceStencil(const StencilDescriptor& frontFaceStencil) const;
         void SetBackFaceStencil(const StencilDescriptor& backFaceStencil) const;

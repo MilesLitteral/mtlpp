@@ -13,15 +13,18 @@ namespace mtlpp
     class Texture;
     class Buffer;
 
-    enum class LoadAction
+namespace LoadAction {
+    enum LoadAction
     {
         DontCare = 0,
         Load     = 1,
         Clear    = 2,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
+};
 
-    enum class StoreAction
+namespace StoreAction {
+    enum  StoreAction
     {
         DontCare                                               = 0,
         Store                                                  = 1,
@@ -30,7 +33,7 @@ namespace mtlpp
         Unknown                    MTLPP_AVAILABLE(10_12,10_0) = 4,
     }
     MTLPP_AVAILABLE(10_11, 8_0);
-
+};
     enum class MultisampleDepthResolveFilter
     {
         Sample0 = 0,
@@ -67,8 +70,8 @@ namespace mtlpp
         uint32_t    GetResolveLevel() const;
         uint32_t    GetResolveSlice() const;
         uint32_t    GetResolveDepthPlane() const;
-        LoadAction  GetLoadAction() const;
-        StoreAction GetStoreAction() const;
+        LoadAction::LoadAction  GetLoadAction() const;
+        StoreAction::StoreAction GetStoreAction() const;
 
         void SetTexture(const Texture& texture);
         void SetLevel(uint32_t level);
@@ -78,8 +81,8 @@ namespace mtlpp
         void SetResolveLevel(uint32_t resolveLevel);
         void SetResolveSlice(uint32_t resolveSlice);
         void SetResolveDepthPlane(uint32_t resolveDepthPlane);
-        void SetLoadAction(LoadAction loadAction);
-        void SetStoreAction(StoreAction storeAction);
+        void SetLoadAction(LoadAction::LoadAction loadAction);
+        void SetStoreAction(StoreAction::StoreAction storeAction);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 
