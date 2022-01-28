@@ -17,6 +17,8 @@ build_experiment()
     clang++ $cppflags $ldflags ../mtl++/main.cpp $output/mtlpp.o -o $output/metalAdder
     xcrun -sdk macosx metal -c ../mtl++/add.metal -o ../mtl++/add.air
     xcrun -sdk macosx metallib ../mtl++/add.air -o $output/add.metallib
+    
+    rm -Rf "../mtl++/add.air"
     echo "Complete Build: Experiment"
 }
 
