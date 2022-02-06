@@ -2492,7 +2492,7 @@ namespace mtlpp
         return ns::Handle { (__bridge void*)[(__bridge id<MTLParallelRenderCommandEncoder>)m_ptr renderCommandEncoder] };
     }
 
-    void ParallelRenderCommandEncoder::SetColorStoreAction(StoreAction storeAction, uint32_t colorAttachmentIndex)
+    void ParallelRenderCommandEncoder::SetColorStoreAction(StoreAction::StoreAction storeAction, uint32_t colorAttachmentIndex)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
@@ -2500,7 +2500,7 @@ namespace mtlpp
 #endif
     }
 
-    void ParallelRenderCommandEncoder::SetDepthStoreAction(StoreAction storeAction)
+    void ParallelRenderCommandEncoder::SetDepthStoreAction(StoreAction::StoreAction storeAction)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
@@ -2508,7 +2508,7 @@ namespace mtlpp
 #endif
     }
 
-    void ParallelRenderCommandEncoder::SetStencilStoreAction(StoreAction storeAction)
+    void ParallelRenderCommandEncoder::SetStencilStoreAction(StoreAction::StoreAction storeAction)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
@@ -2841,7 +2841,7 @@ namespace mtlpp
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr setVisibilityResultMode:MTLVisibilityResultMode(mode) offset:offset];
     }
 
-    void RenderCommandEncoder::SetColorStoreAction(StoreAction storeAction, uint32_t colorAttachmentIndex)
+    void RenderCommandEncoder::SetColorStoreAction(StoreAction::StoreAction storeAction, uint32_t colorAttachmentIndex)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
@@ -2849,7 +2849,7 @@ namespace mtlpp
 #endif
     }
 
-    void RenderCommandEncoder::SetDepthStoreAction(StoreAction storeAction)
+    void RenderCommandEncoder::SetDepthStoreAction(StoreAction::StoreAction storeAction)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
@@ -2857,7 +2857,7 @@ namespace mtlpp
 #endif
     }
 
-    void RenderCommandEncoder::SetStencilStoreAction(StoreAction storeAction)
+    void RenderCommandEncoder::SetStencilStoreAction(StoreAction::StoreAction storeAction)
     {
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
@@ -3116,16 +3116,16 @@ namespace mtlpp
         return uint32_t([(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr resolveDepthPlane]);
     }
 
-    LoadAction RenderPassAttachmentDescriptor::GetLoadAction() const
+    LoadAction::LoadAction RenderPassAttachmentDescriptor::GetLoadAction() const
     {
         Validate();
-        return LoadAction([(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr loadAction]);
+        return LoadAction::LoadAction([(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr loadAction]);
     }
 
-    StoreAction RenderPassAttachmentDescriptor::GetStoreAction() const
+    StoreAction::StoreAction RenderPassAttachmentDescriptor::GetStoreAction() const
     {
         Validate();
-        return StoreAction([(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr storeAction]);
+        return StoreAction::StoreAction([(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr storeAction]);
     }
 
     void RenderPassAttachmentDescriptor::SetTexture(const Texture& texture)
@@ -3176,13 +3176,13 @@ namespace mtlpp
         [(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr setResolveDepthPlane:resolveDepthPlane];
     }
 
-    void RenderPassAttachmentDescriptor::SetLoadAction(LoadAction loadAction)
+    void RenderPassAttachmentDescriptor::SetLoadAction(LoadAction::LoadAction loadAction)
     {
         Validate();
         [(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr setLoadAction:MTLLoadAction(loadAction)];
     }
 
-    void RenderPassAttachmentDescriptor::SetStoreAction(StoreAction storeAction)
+    void RenderPassAttachmentDescriptor::SetStoreAction(StoreAction::StoreAction storeAction)
     {
         Validate();
         [(__bridge MTLRenderPassAttachmentDescriptor*)m_ptr setStoreAction:MTLStoreAction(storeAction)];

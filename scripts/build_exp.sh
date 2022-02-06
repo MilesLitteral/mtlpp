@@ -14,11 +14,10 @@ build_experiment()
     mkdir -p $output
 
     clang++ $objcflags -c ../mtlpp.mm -o $output/mtlpp.o
-    clang++ $cppflags $ldflags ../mtl++/main.cpp $output/mtlpp.o -o $output/metalAdder
-    xcrun -sdk macosx metal -c ../mtl++/add.metal -o ../mtl++/add.air
-    xcrun -sdk macosx metallib ../mtl++/add.air -o $output/add.metallib
+    clang++ $cppflags $ldflags ../fut++/Mtl++/main.cpp $output/mtlpp.o -o $output/metalAdder
+    xcrun -sdk macosx metal -c ../fut++/Mtl++/add.metal -o $output/add.air
+    xcrun -sdk macosx metallib $output/add.air -o $output/add.metallib
     
-    rm -Rf "../mtl++/add.air"
     echo "Complete Build: Experiment"
 }
 

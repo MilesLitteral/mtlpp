@@ -15,5 +15,5 @@ kernel void mtlAddArrays(device const float* inA,
 {
     // the for-loop is replaced with a collection of threads, each of which
     // calls this function.
-    result[index] = inA[index] + inB[index];
+    result[index] = result[index] + inA[index] * inB[index];
 }
