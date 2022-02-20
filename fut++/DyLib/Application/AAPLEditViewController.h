@@ -9,20 +9,20 @@ Header for the cross-platform text editing view controller.
 #include <UIKit/UIKit.h>
 #define PlatformViewController UIViewController
 #else
-#include <AppKit/AppKit.h>;
+#include <AppKit/AppKit.h>
 #define PlatformViewController NSViewController
 #endif
 
-#include <Metal/MetalKit.h>
-#include "AAPLRenderer.h"
+#include <MetalKit/MetalKit.h>
+#include "../Renderer/AAPLRenderer.h"
 
 class AAPLEditViewController : PlatformViewController;
 
 #if defined(TARGET_IOS)
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+IBOutlet UITextView *textView;
 #else
-@property (unsafe_unretained) IBOutlet NSTextView *textView;
+IBOutlet NSTextView *textView;
 #endif
 
-@property (atomic) AAPLRenderer *renderer;
+AAPLRenderer *renderer;
 

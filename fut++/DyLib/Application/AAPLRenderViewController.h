@@ -12,7 +12,6 @@ Header for the cross-platform Metal rendering view controller.
 #include <AppKit/AppKit.h>
 #define PlatformViewController NSViewController
 #endif
-#include <Metal/MetalKit.h>
+#include <MetalKit/MetalKit.h>
 
 class AAPLRenderViewController : PlatformViewController
-

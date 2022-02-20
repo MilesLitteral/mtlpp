@@ -17,7 +17,6 @@ Implementation of the cross-platform Metal rendering view controller.
 class AAPLRenderViewController
 {
     MTKView *_view;
-    
     AAPLRenderer *_renderer;
 }
 
@@ -42,13 +41,13 @@ void viewDidLoad()
         return;
     }
 #else
-    _view.device = device.selectMetalDevice();
+    _view.device = selectMetalDevice();
     assert(_view.device);
 #endif
-    _view.framebufferOnly = NO;
-    _renderer = [[AAPLRenderer alloc] initWithMetalKitView:_view];
+    _view.framebufferOnly = false;
+    _renderer = new AAPLRenderer() //alloc] initWithMetalKitView:_view];
     
-    NSAssert(_renderer, @"Renderer failed initialization");
+    assert(_renderer);
 
 #if defined(TARGET_IOS)
     CGFloat contentScaleFactor = _view.contentScaleFactor;
@@ -61,7 +60,6 @@ void viewDidLoad()
      CGSizeMake(_view.bounds.size.width * backingScaleFactor,
                 _view.bounds.size.height * backingScaleFactor)];
 #endif
-    
     _view.delegate = _renderer;
 }
 
@@ -97,21 +95,19 @@ void viewDidLoad()
     }
 }
 #else
-void viewWillAppear
+void viewWillAppear()
 {
-    [super viewWillAppear];
-    
     AAPLEditViewController *editViewController = (AAPLEditViewController *)[[[((NSSplitViewController *)[self parentViewController])
                                   splitViewItems]
                                  firstObject]
                                 viewController];
-    if(editViewController != nil)
+    if(editViewController != NULL)
     {
-        editViewController.renderer = _renderer;
+        editViewController->renderer = _renderer;
     }
 }
 
-mtlpp::Device selectMetalDevice
+mtlpp::Device selectMetalDevice()
 {
     mtlpp::Device devices[] = mtlpp::CopyAllDevices();
     

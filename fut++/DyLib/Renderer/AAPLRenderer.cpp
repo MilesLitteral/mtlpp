@@ -13,7 +13,7 @@ Implementation of the renderer class that performs Metal setup and per-frame ren
 
 // Include header shared between C code here, which executes Metal API commands, and .metal files
 #include "AAPLShaderTypes.h"
-#include "mtlpp.hpp"
+#include "../../mtlpp.hpp"
 
 // The max number of command buffers in flight
 static const int AAPLMaxFramesInFlight = 3;
@@ -53,32 +53,32 @@ class AAPLRenderer
 
 // Initialize with the MetalKit view with the Metal device used to render.  This MetalKit view
 // object will also be used to set the pixelFormat and other properties of the drawable
-// class initWithMetalKitView
-// {
-//     initWithMetalKitView(MTKView* mtkView)
-//     {
-//         _device = mtkView.device;
-//         _inFlightSemaphore = dispatch_semaphore_create(AAPLMaxFramesInFlight);
-//         mtkView.loadMetal();
-//         MTK::loadAssets;
-//     }
-// };
+class initWithMetalKitView
+{
+    initWithMetalKitView(MTKView* mtkView)
+    {
+        _device = mtkView.device;
+        _inFlightSemaphore = dispatch_semaphore_create(AAPLMaxFramesInFlight);
+        mtkView.loadMetal();
+        MTK::loadAssets;
+    }
+};
 
-/// Create the Metal render state objects including shaders and render state pipeline objects
-// void loadMetal(MTKView* mtkView)
-// {
-//     mtkView.setUpView();
+// Create the Metal render state objects including shaders and render state pipeline objects
+void loadMetal(MTKView* mtkView)
+{
+    mtkView.setUpView();
 
-//     mtlpp::Library metalLibrary = [self loadMetallib];
+    mtlpp::Library metalLibrary = [self loadMetallib];
 
-//     [self createBuffers];
+    [self createBuffers];
 
-//     [self createRenderStateWithLibrary:metalLibrary];
+    [self createRenderStateWithLibrary:metalLibrary];
 
-//     [self createComputePipelineWithLibrary:metalLibrary];
+    [self createComputePipelineWithLibrary:metalLibrary];
 
-//     _commandQueue = [_device newCommandQueue];
-// }
+    _commandQueue = [_device newCommandQueue];
+}
 
 // Load the Metal library created in the "Build Executable Metal Library" build phase.
 // This library includes the functions in AAPLShaders.metal and the UserDylib.metallib
@@ -354,15 +354,15 @@ void updateSceneState()
 }
 
 /// Update the 3D projection matrix with the given size
-- (void)updateProjectionMatrixWithSize:(CGSize)size
+void updateProjectionMatrixWithSize(CGSize size)
 {
     /// Respond to drawable size or orientation changes here
     float aspect = size.width / (float)size.height;
     _projectionMatrix = matrix_perspective_right_hand(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
 }
 
-/// Create render targets for compute kernel inputs
--(void)createRenderTargetsWithSize:(CGSize)size
+// Create render targets for compute kernel inputs
+void createRenderTargetsWithSize(CGSize size)
 {
     MTLTextureDescriptor *renderTargetDesc = [MTLTextureDescriptor new];
 
@@ -387,32 +387,32 @@ void updateSceneState()
 }
 
 /// Called whenever view changes orientation or layout is changed
-- (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size
+void mtkView(MTKView * view, drawableSizeWillChange:(CGSize)size)
 {
     // Update the aspect ratio and projection matrix since the view orientation or size has changed.
     [self updateProjectionMatrixWithSize:size];
     [self createRenderTargetsWithSize:size];
 }
 
-/// Called whenever the view needs to render
-- (void)drawInMTKView:(nonnull MTKView*)view
+//Called whenever the view needs to render
+void drawInMTKView(MTKView* view)
 {
     NSUInteger frameDataBufferIndex = _frameNumber % AAPLMaxFramesInFlight;
 
     dispatch_semaphore_wait(_inFlightSemaphore, DISPATCH_TIME_FOREVER);
 
-    [self updateSceneState];
+    // [self updateSceneState];
 
     // Render cube to offscreen texture
     {
         id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
-        commandBuffer.label = [NSString stringWithFormat:@"Render CommandBuffer"];
+        commandBuffer.label = [ns::String stringWithFormat: "Render CommandBuffer"];
 
         id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer
                                                      renderCommandEncoderWithDescriptor:_renderPassDescriptor];
         // Render cube
-        renderEncoder.label = @"Render Encoder";
-        [renderEncoder pushDebugGroup:@"Render Cube"];
+        renderEncoder.label = "Render Encoder";
+        [renderEncoder pushDebugGroup: "Render Cube"];
 
         [renderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
         [renderEncoder setCullMode:MTLCullModeBack];
@@ -453,8 +453,8 @@ void updateSceneState()
     // Use compute pipeline from function in dylib to process offscreen texture
     if(_computePipeline && view.currentDrawable)
     {
-        id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
-        commandBuffer.label = [NSString stringWithFormat:@"Compute CommandBuffer"];
+        mtlpp::CommandBuffer commandBuffer = [_commandQueue commandBuffer];
+        commandBuffer.label = [ns::String stringWithFormat:@"Compute CommandBuffer"];
 
         __block dispatch_semaphore_t block_sema = _inFlightSemaphore;
         [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer)
@@ -463,7 +463,7 @@ void updateSceneState()
         }];
 
         id<MTLComputeCommandEncoder> computeEncoder = [commandBuffer computeCommandEncoder];
-        computeEncoder.label = @"Compute Encoder";
+        computeEncoder.label = "Compute Encoder";
         [computeEncoder setComputePipelineState:_computePipeline];
         [computeEncoder setTexture:_colorTarget
                            atIndex:AAPLTextureIndexComputeIn];
@@ -484,13 +484,13 @@ void updateSceneState()
 }
 
 /// Compile a dylib with the given program string then create a compute pipeline with the dylib
-void compileDylibWithString:(NSString * programString)
+void compileDylibWithString:(ns::String * programString)
 {
-    NSError *error;
+    ns::Error *error;
 
     MTLCompileOptions *options = [MTLCompileOptions new];
     options.libraryType = MTLLibraryTypeDynamic;
-    options.installName = [NSString stringWithFormat:@"@executable_path/userCreatedDylib.metallib"];
+    options.installName = [ns::String stringWithFormat:@"@executable_path/userCreatedDylib.metallib"];
 
     mtlpp::Library> lib = [_device newLibraryWithSource:programString
                                                options:options

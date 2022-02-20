@@ -12,7 +12,7 @@ class AAPLAppDelegate
     bool application;
     UIApplication * application; 
 
-    bool didFinishLaunchingWithOptions(ns::Dictionary *launchOptions)
+    bool didFinishLaunchingWithOptions(ns::Dictionary* launchOptions)
     {
         return true;
     }

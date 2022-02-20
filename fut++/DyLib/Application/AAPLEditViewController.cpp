@@ -10,7 +10,7 @@ Implementation of the cross-platform text editing view controller.
 
 class AAPLEditViewController
 {
-    std::string *_dylibString;
+    ns::String *_dylibString;
     CGFloat spaceToBottomValueStartValue;
     volatile IBOutlet NSLayoutConstraint *spaceToBottomLayoutGuide;
 };
