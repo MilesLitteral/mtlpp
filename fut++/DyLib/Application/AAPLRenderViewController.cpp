@@ -16,7 +16,7 @@ Implementation of the cross-platform Metal rendering view controller.
 
 class AAPLRenderViewController
 {
-    mtlpp::View *_view;
+    MTKView *_view;
     
     AAPLRenderer *_renderer;
 }
@@ -43,7 +43,7 @@ void viewDidLoad()
     }
 #else
     _view.device = device.selectMetalDevice();
-    NSAssert(_view.device, @"Metal is not supported on this device");
+    assert(_view.device);
 #endif
     _view.framebufferOnly = NO;
     _renderer = [[AAPLRenderer alloc] initWithMetalKitView:_view];
@@ -97,7 +97,7 @@ void viewDidLoad()
     }
 }
 #else
-- (void)viewWillAppear
+void viewWillAppear
 {
     [super viewWillAppear];
     
@@ -111,11 +111,12 @@ void viewDidLoad()
     }
 }
 
-- (id<MTLDevice>)selectMetalDevice
+mtlpp::Device selectMetalDevice
 {
-    NSArray<id<MTLDevice>> *devices = MTLCopyAllDevices();
-    // Search for high-powered devices that support dynamic libraries
-    for(id<MTLDevice> device in devices)
+    mtlpp::Device devices[] = mtlpp::CopyAllDevices();
+    
+    //Search for high-powered devices that support dynamic libraries
+    for(mtlpp::Device device in devices)
     {
         if(!device.isLowPower &&
            device.supportsDynamicLibraries)
@@ -124,7 +125,7 @@ void viewDidLoad()
         }
     }
     // Search for any device that supports dynamic libraries
-    for(id<MTLDevice> device in devices)
+    for(mtlpp::Device device in devices)
     {
         if(device.supportsDynamicLibraries)
         {
@@ -132,8 +133,6 @@ void viewDidLoad()
         }
     }
     
-    return nil;
+    return NULL;
 }
 #endif
-
-@end

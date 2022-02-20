@@ -180,25 +180,14 @@ class MetalEngine
 
 //By Default, Metallib is made at compilation time however this is an alternative test to run const chars as Metal Scripts
 //Possibly more Important for Futhark
-void generateMetalLib(const char *src, mtlpp::Device device){
-const char shadersSrc[] = 
-        "#include <metal_stdlib>";
-        "using namespace metal;";
-        "kernel void sqr(";
-            "const device float *vIn [[ buffer(0) ]],";
-            "device float *vOut [[ buffer(1) ]],";
-            "uint id[[ thread_position_in_grid ]])";
-        "{";
-            "vOut[id] = vIn[id] * vIn[id];";       
-        "}";
-
+void generateMetalLib(const char *src, ns::String functionName, mtlpp::Device device){
     ns::Error* error = NULL; //nullptr
     
     MetalEngine adder = MetalEngine(device);
 
-    mtlpp::Library library  = device.NewLibrary(shadersSrc, mtlpp::CompileOptions(), error);
+    mtlpp::Library library  = device.NewLibrary(src, mtlpp::CompileOptions(), error);
     assert(library);
-    mtlpp::Function sqrFunc = library.NewFunction("sqr");
+    mtlpp::Function sqrFunc = library.NewFunction(functionName);
     assert(sqrFunc);
 
     mtlpp::ComputePipelineState computePipelineState = device.NewComputePipelineState(sqrFunc, error);
@@ -216,7 +205,7 @@ const char shadersSrc[] =
 
 //By Default, Metallib is made at compilation time however this is an alternative test to run const chars as Metal Scripts
 //Possibly more Important for Futhark
-void generateMetalLibRaw(const char *src, mtlpp::Device device){
+void generateMetalLibRaw(const char *src, ns::String functionName, mtlpp::Device device){
 const char shadersSrc[] = 
         "#include <metal_stdlib>";
         "using namespace metal;";
@@ -228,7 +217,7 @@ const char shadersSrc[] =
             "vOut[id] = vIn[id] * vIn[id];";       
         "}";
     
-    MetalEngine adder = MetalEngine(device, src, "sqr");
+    MetalEngine adder = MetalEngine(device, src, functionName);
 
     // Create buffers to hold data
     printf("prepare data\n");
