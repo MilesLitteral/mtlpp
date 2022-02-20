@@ -13,17 +13,17 @@ class AAPLEditViewController
     std::string *_dylibString;
     CGFloat spaceToBottomValueStartValue;
     volatile IBOutlet NSLayoutConstraint *spaceToBottomLayoutGuide;
-}
+};
 
 void viewDidLoad()
 {
     //[super viewDidLoad];
     
-    ns::NSError *error;
-    std::string *pathToFunction = [[NSBundle mainBundle] pathForResource:@"AAPLUserCompiledFunction.metal", ofType:nil];
-    _dylibString = [NSString stringWithContentsOfFile:pathToFunction, encoding:NSUTF8StringEncoding, error:&error];
+    ns::Error *error;
+    ns::String *pathToFunction = [[NSBundle mainBundle] pathForResource:@"AAPLUserCompiledFunction.metal"];
+    ns::String _dylibString = pathToFunction; //encoding:NSUTF8StringEncoding, error:&error
 
-    assert(_dylibString, @"Failed to load kernel string from file: %@", error);
+    printf("%@ Failed to load kernel string from file: %@", _dylibString, error);
 
 #if defined(TARGET_IOS)
     _textView.text = _dylibString;

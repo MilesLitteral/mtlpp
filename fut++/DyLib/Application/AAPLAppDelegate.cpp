@@ -5,27 +5,21 @@ Abstract:
 Implementation of the cross-platform app delegate.
 */
 
-#import "AAPLAppDelegate.h"
+#include "AAPLAppDelegate.h"
 
 class AAPLAppDelegate
 {
-    #if defined(TARGET_IOS)
-
     bool application;
     UIApplication * application; 
 
-    bool didFinishLaunchingWithOptions(NSDictionary *launchOptions)
+    bool didFinishLaunchingWithOptions(ns::Dictionary *launchOptions)
     {
         return true;
     }
 
-    #else
-
-    bool applicationShouldTerminateAfterLastWindowClosed(NSApplication * sender)
+    bool applicationShouldTerminateAfterLastWindowClosed(ns::Application* sender)
     {
-        return true
+        return true;
     }
-
-    #endif
-}
+};
 

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.cu": "cuda",
+        "__locale": "cpp",
+        "locale": "cpp"
+    }
+}
