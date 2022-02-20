@@ -44,5 +44,5 @@ if $2 == 1
 fi
 
 if $2 == 2
-    build_tensorflow 2.6.0 
+    build_tensorflow $1
 fi
