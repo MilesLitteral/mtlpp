@@ -36,7 +36,7 @@ upgrade_tensorflow_metal(){
 }
 
 if $2 == 0
-    build_tensorflow_metal 2.6.0 
+    build_tensorflow_metal $1
 fi
 
 if $2 == 1
