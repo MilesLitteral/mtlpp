@@ -5,7 +5,6 @@ Abstract:
 Header for split view controller for iOS.
 */
 
-#include <UIKit/UIKit.h>
+#include "UIKit.h"
 
 class AAPLSplitViewController : UISplitViewController
-

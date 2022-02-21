@@ -13,7 +13,7 @@ Implementation of the renderer class that performs Metal setup and per-frame ren
 
 // Include header shared between C code here, which executes Metal API commands, and .metal files
 #include "AAPLShaderTypes.h"
-#include "../../mtlpp.hpp"
+#include "../../../mtlpp.hpp"
 
 // The max number of command buffers in flight
 static const int AAPLMaxFramesInFlight = 3;
@@ -136,19 +136,19 @@ void createRenderStateWithLibrary(mtlpp::Library metallib)
     
         _vertexDescriptor->GetAttributes()[AAPLVertexAttributePosition].SetFormat(mtlpp::VertexFormat::Float3);
         _vertexDescriptor->GetAttributes()[AAPLVertexAttributePosition].SetOffset(0);
-        _vertexDescriptor->GetAttributes()[AAPLVertexAttributePosition].bufferIndex = AAPLBufferIndexMeshPositions;
+        _vertexDescriptor->GetAttributes()[AAPLVertexAttributePosition].SetBufferIndex(AAPLBufferIndexMeshPositions);
 
         _vertexDescriptor->GetAttributes()[AAPLVertexAttributeTexcoord].SetFormat(mtlpp::VertexFormat::Float2);
-        _vertexDescriptor->GetAttributes()[AAPLVertexAttributeTexcoord].offset = 0;
-        _vertexDescriptor->GetAttributes()[AAPLVertexAttributeTexcoord].bufferIndex = AAPLBufferIndexMeshGenerics;
+        _vertexDescriptor->GetAttributes()[AAPLVertexAttributeTexcoord].SetOffset(0);
+        _vertexDescriptor->GetAttributes()[AAPLVertexAttributeTexcoord].SetBufferIndex(AAPLBufferIndexMeshGenerics);
 
-        _vertexDescriptor.layouts[AAPLBufferIndexMeshPositions].stride = 16;
-        _vertexDescriptor.layouts[AAPLBufferIndexMeshPositions].stepRate = 1;
-        _vertexDescriptor.layouts[AAPLBufferIndexMeshPositions].stepFunction = MTLVertexStepFunctionPerVertex;
+        _vertexDescriptor->GetLayouts()[AAPLBufferIndexMeshPositions].SetStride(16);
+        _vertexDescriptor->GetLayouts()[AAPLBufferIndexMeshPositions].SetStepRate(1);
+        _vertexDescriptor->GetLayouts()[AAPLBufferIndexMeshPositions].SetStepFunction(MTLVertexStepFunctionPerVertex);
 
-        _vertexDescriptor.layouts[AAPLBufferIndexMeshGenerics].stride = 8;
-        _vertexDescriptor.layouts[AAPLBufferIndexMeshGenerics].stepRate = 1;
-        _vertexDescriptor.layouts[AAPLBufferIndexMeshGenerics].stepFunction = MTLVertexStepFunctionPerVertex;
+        _vertexDescriptor->GetLayouts()[AAPLBufferIndexMeshGenerics].SetStride(8);
+        _vertexDescriptor->GetLayouts()[AAPLBufferIndexMeshGenerics].SetStepRate(1);
+        _vertexDescriptor->GetLayouts()[AAPLBufferIndexMeshGenerics].SetStepFunction(MTLVertexStepFunctionPerVertex);
 
         // Load the vertex function from the library
         mtlpp::Function vertexFunction = metallib.NewFunction("vertexShader");
@@ -156,18 +156,18 @@ void createRenderStateWithLibrary(mtlpp::Library metallib)
         // Load the fragment function from the library
         mtlpp::Function fragmentFunction = metallib.NewFunction("fragmentShader");
 
-        mtllpp::RenderPipelineDescriptor *pipelineDescriptor =   new mtlpp::RenderPipelineDescriptor();
-        pipelineDescriptor.label = "RenderPipeline";
-        pipelineDescriptor.sampleCount = 1;
-        pipelineDescriptor.vertexFunction = vertexFunction;
-        pipelineDescriptor.vertexDescriptor = _vertexDescriptor;
-        pipelineDescriptor.fragmentFunction = fragmentFunction;
-        pipelineDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatRGBA8Unorm;
-        pipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormatDepth32Float;
+        mtlpp::RenderPipelineDescriptor *pipelineDescriptor =   new mtlpp::RenderPipelineDescriptor();
+        pipelineDescriptor->SetLabel("RenderPipeline");
+        pipelineDescriptor->SetSampleCount (1);
+        pipelineDescriptor->SetVertexFunction(vertexFunction);
+        pipelineDescriptor->SetVertexDescriptor(*_vertexDescriptor);
+        pipelineDescriptor->SetFragmentFunction(fragmentFunction);
+        pipelineDescriptor->GetColorAttachments()[0].SetPixelFormat(MTLPixelFormatRGBA8Unorm);
+        pipelineDescriptor->SetDepthAttachmentPixelFormat(MTLPixelFormatDepth32Float);
 
-        _renderPipeline = _device.NewRenderPipelineStateWithDescriptor(pipelineDescriptor, error);
+        _renderPipeline = _device.NewRenderPipelineState(pipelineDescriptor, error);
 
-        assert(_renderPipeline) 
+        assert(_renderPipeline);
         if(_renderPipeline == NULL){
             printf("Failed to create render pipeline state: %@", error);
         }
@@ -176,9 +176,9 @@ void createRenderStateWithLibrary(mtlpp::Library metallib)
     // Set up depth stencil state
     {
         mtlpp::DepthStencilDescriptor *depthStateDesc = new mtlpp::DepthStencilDescriptor();
-        depthStateDesc.depthCompareFunction = mtlpp::CompareFunction(CompareFunction::Less);
-        depthStateDesc.depthWriteEnabled = true;
-        _depthState = [_device newDepthStencilStateWithDescriptor:depthStateDesc];
+        depthStateDesc->SetDepthCompareFunction(mtlpp::CompareFunction(mtlpp::CompareFunction::Less));
+        depthStateDesc->SetDepthWriteEnabled(true);
+        _depthState = _device.NewDepthStencilState(*depthStateDesc);
     }
 }
 
@@ -284,7 +284,7 @@ void loadAssets()
             { 1, 0 },
         };
 
-        _texCoordBuffer = _device.NewBuffer(cubeTexCoords, sizeof(cubeTexCoords), 0);
+        _texCoordBuffer = _device.NewBuffer(cubeTexCoords, sizeof(cubeTexCoords), mtlpp::ResourceOptions::StorageModeManaged);
 
     // Create the index buffer to draw the cube.
         static uint16_t indices[] =
@@ -308,29 +308,25 @@ void loadAssets()
             20, 22, 21, 20, 23, 22,
         };
 
-        _indexBuffer = _device.newBuffer(indices, sizeof(indices), 0);
+        _indexBuffer = _device.NewBuffer(indices, sizeof(indices), mtlpp::ResourceOptions::StorageModeManaged);
 
     // Load color texture from asset catalog
     {
-        MTKTextureLoader* textureLoader = [[MTKTextureLoader alloc] initWithDevice:_device];
-
-        enum *textureLoaderOptions =
+        MTKTextureLoader* textureLoader = MTKTextureLoader(_device);
+        
+        enum textureLoaderOptions 
         {
-            MTKTextureLoaderOptionTextureUsage       : @(MTLTextureUsageShaderRead),
-            MTKTextureLoaderOptionTextureStorageMode : @(MTLStorageModePrivate)
+            MTKTextureLoaderOptionTextureUsage,       //: @(MTLTextureUsageShaderRead),
+            MTKTextureLoaderOptionTextureStorageMode //: @(MTLStorageModePrivate)
         };
 
         ns::Error *error;
 
-        _colorMap = [textureLoader newTextureWithName:@"ColorMap"
-                                          scaleFactor:1.0
-                                               bundle:nil
-                                              options:textureLoaderOptions
-                                                error:&error];
+        _colorMap = textureLoader("ColorMap", 1.0, NULL, textureLoaderOptions::MTKTextureLoaderOptionTextureUsage, &error);
 
-        assert(_colorMap) 
+        assert(_colorMap);
         if(_colorMap == NULL){
-            printf(@"Error creating the Metal texture, error: %@.", error);
+            printf("Error creating the Metal texture, error: %@.", error);
         }
     }
 }
@@ -364,7 +360,7 @@ void updateProjectionMatrixWithSize(CGSize size)
 // Create render targets for compute kernel inputs
 void createRenderTargetsWithSize(CGSize size)
 {
-    MTLTextureDescriptor *renderTargetDesc = [MTLTextureDescriptor new];
+    MTLTextureDescriptor *renderTargetDesc = new MTLTextureDescriptor();
 
     // Set up properties common to both color and depth textures.
     renderTargetDesc.width = size.width;
@@ -374,12 +370,12 @@ void createRenderTargetsWithSize(CGSize size)
     // Set up a color render texture target.
     renderTargetDesc.pixelFormat = MTLPixelFormatRGBA8Unorm;
     renderTargetDesc.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
-    _colorTarget =  [_device newTextureWithDescriptor:renderTargetDesc];
+    _colorTarget =  _device.newTextureWithDescriptor(renderTargetDesc);
 
     // Set up a depth texture target.
     renderTargetDesc.pixelFormat = MTLPixelFormatDepth32Float;
     renderTargetDesc.usage = MTLTextureUsageRenderTarget;
-    id<MTLTexture> depthTarget = [_device newTextureWithDescriptor:renderTargetDesc];
+    id<MTLTexture> depthTarget = _device newTextureWithDescriptor:renderTargetDesc];
 
     // Set up the render pass descriptor with newly created textures.
     _renderPassDescriptor.colorAttachments[0].texture = _colorTarget;
@@ -405,7 +401,7 @@ void drawInMTKView(MTKView* view)
 
     // Render cube to offscreen texture
     {
-        id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
+        mtlpp::CommandBuffer commandBuffer = [_commandQueue commandBuffer];
         commandBuffer.label = [ns::String stringWithFormat: "Render CommandBuffer"];
 
         id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer

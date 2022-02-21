@@ -16,5 +16,6 @@ Header for the cross-platform app delegate.
 #endif
 
 class AAPLAppDelegate : PlatformAppDelegate
-
-void PlatformWindow *window;
+{
+    void PlatformWindow *window;
+}

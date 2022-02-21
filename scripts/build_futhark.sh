@@ -7,9 +7,10 @@ build_experiment()
     local ver=$1
     local output="../build/macos_$ver"
     local objcflags="-std=c++11 -x objective-c++ -mmacosx-version-min=$ver"
-    local cppflags="-std=c++11 -mmacosx-version-min=$ver"
+    local cppflags="-std=c++11 -mmacosx-version-min=$ver -fnative-half-type -fallow-half-arguments-and-returns"
     local ldflags="-framework Metal -framework MetalKit -framework Cocoa -framework CoreFoundation -fobjc-link-runtime"
 
+    #-cc1 -fnative-half-type -fallow-half-arguments-and-returns
     rm -Rf $output
     mkdir -p $output
 

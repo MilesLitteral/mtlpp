@@ -9,8 +9,9 @@ Implementation of split view controller for iOS.
 
 class AAPLSplitViewController {
     int preferredDisplayMode;
+    
     void viewDidLoad() {
-        preferredDisplayMode = UISplitViewControllerDisplayModeOneBesideSecondary();
+        preferredDisplayMode = UISplitViewController.DisplayMode.oneBesideSecondary();
     };
 };
 

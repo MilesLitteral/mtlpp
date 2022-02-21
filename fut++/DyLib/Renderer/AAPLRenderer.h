@@ -9,12 +9,12 @@ Header for the renderer class that performs Metal setup and per-frame rendering.
 #define AAPLRenderer_h
 
 #include <MetalKit/MetalKit.h>
-#include <../../../mtlpp.hpp>
+#include "../../../mtlpp.hpp"
 
 // Platform independent renderer class
 class AAPLRenderer : ns::Object<mtlpp::ViewDelegate>
-
-void initWithMetalKitView(mtlpp::View *mtkView);
-void compileDylibWithString(ns::String *_Nonnull programString);
-
+{
+    void initWithMetalKitView(mtlpp::View *mtkView);
+    void compileDylibWithString(ns::String *_Nonnull programString);
+}
 #endif /* AAPLRenderer_h */
