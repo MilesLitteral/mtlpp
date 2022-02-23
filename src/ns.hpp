@@ -152,9 +152,6 @@ namespace ns
         //     _NS_CONST(NotificationName, BundleResourceRequestLowDiskSpaceNotification);
             
         public:
-
-
-
             static Bundle*    mainBundle();
             Bundle(const class String* pPath);
             Bundle(const class URL* pURL);
@@ -164,7 +161,7 @@ namespace ns
             Bundle*           init(const class URL* pURL);
 
             Array<Bundle>*      allBundles() const;
-            Array*      allFrameworks() const;
+            //Array*              allFrameworks() const; //revisit
 
             bool              load();
             bool              unload();
@@ -205,8 +202,6 @@ namespace ns
             class String* LocalizedStringFromTable(const String* pKey, const String* pTbl, const String*);
             class String* LocalizedStringFromTableInBundle(const String* pKey, const String* pTbl, const class Bundle* pBdle, const String*);
             class String* LocalizedStringWithDefaultValue(const String* pKey, const String* pTbl, const class Bundle* pBdle, const String* pVal, const String*);
-
-
     };
 }
 

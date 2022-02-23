@@ -302,6 +302,74 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)binaryArchive};
     }
 
+    // class TileRenderPipelineColorAttachmentDescriptor : public NS::Copying<TileRenderPipelineColorAttachmentDescriptor>
+    // {
+    // public:
+    //     static class TileRenderPipelineColorAttachmentDescriptor* alloc();
+
+    //     class TileRenderPipelineColorAttachmentDescriptor*        init();
+
+    //     MTL::PixelFormat                                          pixelFormat() const;
+    //     void                                                      setPixelFormat(MTL::PixelFormat pixelFormat);
+    // };
+
+    // class TileRenderPipelineColorAttachmentDescriptorArray : public NS::Referencing<TileRenderPipelineColorAttachmentDescriptorArray>
+    // {
+    // public:
+    //     static class TileRenderPipelineColorAttachmentDescriptorArray* alloc();
+
+    //     class TileRenderPipelineColorAttachmentDescriptorArray*        init();
+
+    //     class TileRenderPipelineColorAttachmentDescriptor*             object(NS::UInteger attachmentIndex);
+
+    //     void                                                           setObject(const class TileRenderPipelineColorAttachmentDescriptor* attachment, NS::UInteger attachmentIndex);
+    // };
+
+    // class TileRenderPipelineDescriptor : public NS::Copying<TileRenderPipelineDescriptor>
+    // {
+    // public:
+    //     static class TileRenderPipelineDescriptor*              alloc();
+
+    //     class TileRenderPipelineDescriptor*                     init();
+
+    //     NS::String*                                             label() const;
+    //     void                                                    setLabel(const NS::String* label);
+
+    //     class Function*                                         tileFunction() const;
+    //     void                                                    setTileFunction(const class Function* tileFunction);
+
+    //     NS::UInteger                                            rasterSampleCount() const;
+    //     void                                                    setRasterSampleCount(NS::UInteger rasterSampleCount);
+
+    //     class TileRenderPipelineColorAttachmentDescriptorArray* colorAttachments() const;
+
+    //     bool                                                    threadgroupSizeMatchesTileSize() const;
+    //     void                                                    setThreadgroupSizeMatchesTileSize(bool threadgroupSizeMatchesTileSize);
+
+    //     class PipelineBufferDescriptorArray*                    tileBuffers() const;
+
+    //     NS::UInteger                                            maxTotalThreadsPerThreadgroup() const;
+    //     void                                                    setMaxTotalThreadsPerThreadgroup(NS::UInteger maxTotalThreadsPerThreadgroup);
+
+    //     NS::Array*                                              binaryArchives() const;
+    //     void                                                    setBinaryArchives(const NS::Array* binaryArchives);
+
+    //     NS::Array*                                              preloadedLibraries() const;
+    //     void                                                    setPreloadedLibraries(const NS::Array* preloadedLibraries);
+
+    //     class LinkedFunctions*                                  linkedFunctions() const;
+    //     void                                                    setLinkedFunctions(const class LinkedFunctions* linkedFunctions);
+
+    //     bool                                                    supportAddingBinaryFunctions() const;
+    //     void                                                    setSupportAddingBinaryFunctions(bool supportAddingBinaryFunctions);
+
+    //     NS::UInteger                                            maxCallStackDepth() const;
+    //     void                                                    setMaxCallStackDepth(NS::UInteger maxCallStackDepth);
+
+    //     void                                                    reset();
+    // };
+
+
     RenderPipelineState Device::NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, ns::Error* error)
     {
         Validate();
