@@ -69,7 +69,7 @@ void loadMetal(MTKView* mtkView)
 {
     mtkView.setUpView();
 
-    mtlpp::Library metalLibrary = [self loadMetallib];
+    mtlpp::Library metalLibrary = this.loadMetallib();
 
     this.createBuffers();
     this.createRenderStateWithLibrary(metalLibrary);
@@ -457,8 +457,8 @@ void drawInMTKView(MTKView* view)
 void compileDylibWithString(ns::String* programString)
 {
     ns::Error *error;
-
-    MTLCompileOptions *options = MTLCompileOptions new;
+    
+    mtlpp::CompileOptions* options = new mtlpp::CompileOptions();
     options.libraryType = MTLLibraryTypeDynamic;
     options.installName = ns::String("@executable_path/userCreatedDylib.metallib";
 
@@ -479,7 +479,7 @@ void compileDylibWithString(ns::String* programString)
     
     mtlpp::ComputePipelineDescriptor *descriptor = new mtlpp::ComputePipelineDescriptor();
     descriptor.SetComputeFunction(_baseDescriptor.computeFunction);
-    descriptor.insertLibraries = dynamicLib;
+    descriptor.SetinsertLibraries = dynamicLib;
     
     mtlpp::ComputePipelineState previousComputePipeline = _computePipeline;
     _computePipeline = _device.NewComputePipelineState(descriptor, MTLPipelineOptionNone, NULL, error);
