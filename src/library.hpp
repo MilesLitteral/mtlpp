@@ -8,6 +8,7 @@
 #include "defines.hpp"
 #include "ns.hpp"
 #include "argument.hpp"
+#include "binary_archive.hpp"
 
 namespace mtlpp
 {

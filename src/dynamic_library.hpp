@@ -29,8 +29,7 @@ namespace mtlpp
             mtlpp::Device* device;
             ns::String*    installName;
 
-        public:
-            
+        public:   
             ns::String*     GetLabel();
             void            SetLabel(ns::String* label);
             mtlpp::Device*  GetDevice();

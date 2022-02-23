@@ -24,9 +24,6 @@ namespace mtlpp
 
         ns::URL                               GetUrl();
         void                                  SetUrl(ns::URL* url);
-
-        ns::URL mtlpp::BinaryArchiveDescriptor::GetUrl();
-        void mtlpp::BinaryArchiveDescriptor::setUrl(ns::URL* _url);
     };
 
     class BinaryArchive : public ns::Object

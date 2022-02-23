@@ -2,119 +2,95 @@
 
 #include "ns.hpp"
 #include "mtlpp.hpp" 
+#include "binary_archive.hpp"
 //#include <Foundation/Foundation.hpp> //maybe?
 
+    
+// (id<MTLBinaryArchive>)newBinaryArchiveWithDescriptor:(MTLBinaryArchiveDescriptor *)descriptor 
+//                                                  error:(NSError * _Nullable *)error;
+
+    //     // Error
+    //     NSError* nsError = NULL;
+    //     NSError** nsErrorPtr = error ? &nsError : nullptr;
+
+    //     id<MTLRenderPipelineState> renderPipelineState = [(__bridge id<MTLDevice>)m_ptr newRenderPipelineStateWithDescriptor:(__bridge MTLRenderPipelineDescriptor*)descriptor.GetPtr()
+    //                                                                                                                    error:nsErrorPtr];
+
+    //     // Error update
+    //     if (error && nsError){
+    //         *error = ns::Handle{ (__bridge void*)nsError };
+    //     }
+
+    //     return ns::Handle{ (__bridge void*)renderPipelineState };
+    // }
+    
 namespace mtlpp
 {
-    enum class BinaryArchiveError {
-        BinaryArchiveErrorNone = 0,
-        BinaryArchiveErrorInvalidFile = 1,
-        BinaryArchiveErrorUnexpectedElement = 2,
-        BinaryArchiveErrorCompilationFailure = 3,
+
+    NSURL BinaryArchiveDescriptor::GetUrl(){
+        Validate();
+        return [(__bridge id<MTLBinaryArchiveDescriptor>)m_ptr url)];
+    }
+        
+    void mtlpp::BinaryArchiveDescriptor::SetUrl(ns::URL* _url){
+        Validate();
+        return [(__bridge id<MTLBinaryArchiveDescriptor>)m_ptr)addTileRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor.GetPtr() 
+                                            error: error];
+    }
+
+    ns::String* BinaryArchive::GetLabel(){
+        Validate();                       
+        return ns::Handle{ (__bridge void*)[(__bridge NSString*)m_ptr label] };
+    }
+
+    void BinaryArchive::SetLabel(const ns::String* label);
+    {
+        Validate();
+        [(__bridge id<MTLBinaryArchive>)m_ptr setLabel:(__bridge NSString*)label.GetPtr()];
+    }
+
+    bool BinaryArchive::addComputePipelineFunctions(const class ComputePipelineDescriptor* descriptor, ns::Error** error){
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr)addComputePipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor 
+                                            error:(NSError * _Nullable *)error];
+        #else
+            return false;
+        #endif
     };
 
-    class BinaryArchiveDescriptor : public ns::Object
-    {
-    public:
-        static class BinaryArchiveDescriptor* alloc();
-
-        class BinaryArchiveDescriptor*        init();
-
-        ns::URL*                              url() const;
-        void                                  setUrl(const ns::URL* url);
+    bool BinaryArchive::addRenderPipelineFunctions(const class RenderPipelineDescriptor* descriptor, ns::Error** error){
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr)addRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor 
+                                            error:(NSError * _Nullable *)error];
+        #else
+            return false;
+        #endif
     };
 
-    class BinaryArchive : public ns::Object
-    {
-    private:
-        ns::String*   label;
-
-    public:
-        ns::String*   GetLabel();
-        void          setLabel(const ns::String* label);
-
-        class Device* device() const;
-
-        bool          addComputePipelineFunctions(const class ComputePipelineDescriptor* descriptor, ns::Error** error);
-
-        bool          addRenderPipelineFunctions(const class RenderPipelineDescriptor* descriptor, ns::Error** error);
-
-        bool          addTileRenderPipelineFunctions(const class TileRenderPipelineDescriptor* descriptor, ns::Error** error);
-
-        bool          serializeToURL(const ns::URL* url, ns::Error** error);
-
-        bool          addFunction(const class FunctionDescriptor* descriptor, const class Library* library, ns::Error** error);
+    bool BinaryArchive::addTileRenderPipelineFunctions(const class TileRenderPipelineDescriptor* descriptor, ns::Error** error){
+        Validate();
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr)addTileRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor 
+                                            error:(NSError * _Nullable *)error];
+        #else
+            return false;
+        #endif
     };
 
-    
+    bool BinaryArchive::serializeToURL(const ns::URL* url, ns::Error** error){
+        Validate();
+        [(__bridge id<MTLBinaryArchive>)m_ptr serializeToURL:(NSURL*)url 
+                                                error:(NSError* _Nullable*)error)]
+    };
 
-    // static method: alloc
-    _MTL_INLINE MTL::BinaryArchiveDescriptor* MTL::BinaryArchiveDescriptor::alloc()
-    {
-        return NS::Object::alloc<MTL::BinaryArchiveDescriptor>(_MTL_PRIVATE_CLS(MTLBinaryArchiveDescriptor));
-    }
-
-    // method: init
-    _MTL_INLINE MTL::BinaryArchiveDescriptor* MTL::BinaryArchiveDescriptor::init()
-    {
-        return NS::Object::init<MTL::BinaryArchiveDescriptor>();
-    }
-
-    // property: url
-    _MTL_INLINE NS::URL* MTL::BinaryArchiveDescriptor::url() const
-    {
-        return Object::sendMessage<NS::URL*>(this, _MTL_PRIVATE_SEL(url));
-    }
-
-    _MTL_INLINE void MTL::BinaryArchiveDescriptor::setUrl(const NS::URL* url)
-    {
-        Object::sendMessage<void>(this, _MTL_PRIVATE_SEL(setUrl_), url);
-    }
-
-    // property: label
-    _MTL_INLINE NS::String* MTL::BinaryArchive::label() const
-    {
-        return Object::sendMessage<NS::String*>(this, _MTL_PRIVATE_SEL(label));
-    }
-
-    _MTL_INLINE void MTL::BinaryArchive::setLabel(const NS::String* label)
-    {
-        Object::sendMessage<void>(this, _MTL_PRIVATE_SEL(setLabel_), label);
-    }
-
-    // property: device
-    _MTL_INLINE MTL::Device* MTL::BinaryArchive::device() const
-    {
-        return Object::sendMessage<MTL::Device*>(this, _MTL_PRIVATE_SEL(device));
-    }
-
-    // method: addComputePipelineFunctionsWithDescriptor:error:
-    _MTL_INLINE bool MTL::BinaryArchive::addComputePipelineFunctions(const MTL::ComputePipelineDescriptor* descriptor, NS::Error** error)
-    {
-        return Object::sendMessage<bool>(this, _MTL_PRIVATE_SEL(addComputePipelineFunctionsWithDescriptor_error_), descriptor, error);
-    }
-
-    // method: addRenderPipelineFunctionsWithDescriptor:error:
-    _MTL_INLINE bool MTL::BinaryArchive::addRenderPipelineFunctions(const MTL::RenderPipelineDescriptor* descriptor, NS::Error** error)
-    {
-        return Object::sendMessage<bool>(this, _MTL_PRIVATE_SEL(addRenderPipelineFunctionsWithDescriptor_error_), descriptor, error);
-    }
-
-    // method: addTileRenderPipelineFunctionsWithDescriptor:error:
-    _MTL_INLINE bool MTL::BinaryArchive::addTileRenderPipelineFunctions(const MTL::TileRenderPipelineDescriptor* descriptor, NS::Error** error)
-    {
-        return Object::sendMessage<bool>(this, _MTL_PRIVATE_SEL(addTileRenderPipelineFunctionsWithDescriptor_error_), descriptor, error);
-    }
-
-    // method: serializeToURL:error:
-    _MTL_INLINE bool MTL::BinaryArchive::serializeToURL(const NS::URL* url, NS::Error** error)
-    {
-        return Object::sendMessage<bool>(this, _MTL_PRIVATE_SEL(serializeToURL_error_), url, error);
-    }
-
-    // method: addFunctionWithDescriptor:library:error:
-    _MTL_INLINE bool MTL::BinaryArchive::addFunction(const MTL::FunctionDescriptor* descriptor, const MTL::Library* library, NS::Error** error)
-    {
-        return Object::sendMessage<bool>(this, _MTL_PRIVATE_SEL(addFunctionWithDescriptor_library_error_), descriptor, library, error);
-    }
+    bool BinaryArchive::addFunction(const class FunctionDescriptor* descriptor, const class Library* library, ns::Error** error){
+        Validate();
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr) addFunctionWithDescriptor:(MTLFunctionDescriptor *)descriptor 
+                    library:(id<MTLLibrary>)library 
+                    error:(NSError * _Nullable *)error];
+            #else
+            return false;
+        #endif
+    };
 }
