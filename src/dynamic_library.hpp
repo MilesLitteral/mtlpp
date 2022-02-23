@@ -60,13 +60,6 @@ namespace mtlpp
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 
-    enum class LibraryType
-    {
-        TypeStatic  = 1,
-        TypeDynamic = 2,
-    }
-    MTLPP_AVAILABLE(10_11, 8_0);
-
     class FunctionConstant : public ns::Object
     {
     public:
@@ -159,22 +152,4 @@ namespace mtlpp
         void NewFunction(const ns::String& functionName, const FunctionConstantValues& constantValues, std::function<void(const Function&, const ns::Error&)> completionHandler) MTLPP_AVAILABLE(10_12, 10_0);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
-
-    class DynamicLibrary : public ns::Object
-    {
-    public:
-        DynamicLibrary() { }
-        DynamicLibrary(const ns::Handle& handle) : ns::Object(handle) { }
-        DynamicLibrary(mtlpp::Library lib)       : ns::Object(lib) { }
-
-        ns::String            GetLabel() const;
-        Device                GetDevice() const;
-        ns::Array<ns::String> GetFunctionNames() const;
-
-        void SetLabel(const ns::String& label);
-
-        Function NewFunction(const ns::String& functionName);
-        Function NewFunction(const ns::String& functionName, const FunctionConstantValues& constantValues, ns::Error* error) MTLPP_AVAILABLE(10_12, 10_0);
-        void NewFunction(const ns::String& functionName, const FunctionConstantValues& constantValues, std::function<void(const Function&, const ns::Error&)> completionHandler) MTLPP_AVAILABLE(10_12, 10_0);
-    }
 }

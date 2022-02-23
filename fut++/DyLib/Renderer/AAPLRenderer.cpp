@@ -479,7 +479,7 @@ void compileDylibWithString(ns::String* programString)
     
     mtlpp::ComputePipelineDescriptor *descriptor = new mtlpp::ComputePipelineDescriptor();
     descriptor.SetComputeFunction(_baseDescriptor.computeFunction);
-    descriptor.SetinsertLibraries = dynamicLib;
+    descriptor.SetInsertLibraries(dynamicLib);
     
     mtlpp::ComputePipelineState previousComputePipeline = _computePipeline;
     _computePipeline = _device.NewComputePipelineState(descriptor, MTLPipelineOptionNone, NULL, error);
