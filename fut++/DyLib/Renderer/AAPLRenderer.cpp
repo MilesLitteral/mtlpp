@@ -69,15 +69,13 @@ void loadMetal(MTKView* mtkView)
 {
     mtkView.setUpView();
 
-    mtlpp::Library metalLibrary = [self loadMetallib];
+    mtlpp::Library metalLibrary = this.loadMetallib();
 
-    [self createBuffers];
+    this.createBuffers();
+    this.createRenderStateWithLibrary(metalLibrary);
+    this.createComputePipelineWithLibrary(metalLibrary);
 
-    [self createRenderStateWithLibrary:metalLibrary];
-
-    [self createComputePipelineWithLibrary:metalLibrary];
-
-    _commandQueue = [_device newCommandQueue];
+    _commandQueue = _device.newCommandQueue();
 }
 
 // Load the Metal library created in the "Build Executable Metal Library" build phase.
@@ -190,9 +188,9 @@ void createComputePipelineWithLibrary(mtlpp::Library metallib)
     _baseDescriptor = new mtlpp::ComputePipelineDescriptor();
     _baseDescriptor->SetComputeFunction(kernelFunction);
     mtlpp::ComputePipelineDescriptor *descriptor = new mtlpp::ComputePipelineDescriptor();
-    descriptor.computeFunction = _baseDescriptor.computeFunction;
+    descriptor->SetComputeFunction(_baseDescriptor->GetComputeFunction());
     
-    _computePipeline = _device.newComputePipelineState(descriptor, options:MTLPipelineOptionNone, NULL, error);
+    _computePipeline = _device.NewComputePipelineState(descriptor, NULL, error);
     assert(_computePipeline)
     if(_computePipeline == NULL){
         printf("Error creating pipeline which links library from source: %@", error);
@@ -334,7 +332,7 @@ void loadAssets()
 //Update any scene state before encoding rendering commands to our drawable
 void updateSceneState()
 {
-    NSUInteger frameDataBufferIndex = _frameNumber % AAPLMaxFramesInFlight;
+    unsigned int frameDataBufferIndex = _frameNumber % AAPLMaxFramesInFlight;
 
     AAPLPerFrameData *frameData = (AAPLPerFrameData*)_frameDataBuffer[frameDataBufferIndex].contents;
 
@@ -350,15 +348,15 @@ void updateSceneState()
 }
 
 /// Update the 3D projection matrix with the given size
-void updateProjectionMatrixWithSize(CGSize size)
+void updateProjectionMatrixWithSize(mtlpp::Size  size)
 {
     /// Respond to drawable size or orientation changes here
-    float aspect = size.width / (float)size.height;
+    float aspect = size.Width / (float)size.Height;
     _projectionMatrix = matrix_perspective_right_hand(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
 }
 
 // Create render targets for compute kernel inputs
-void createRenderTargetsWithSize(CGSize size)
+void createRenderTargetsWithSize(mtlpp::Size  size)
 {
     MTLTextureDescriptor *renderTargetDesc = new MTLTextureDescriptor();
 
@@ -370,12 +368,12 @@ void createRenderTargetsWithSize(CGSize size)
     // Set up a color render texture target.
     renderTargetDesc.pixelFormat = MTLPixelFormatRGBA8Unorm;
     renderTargetDesc.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
-    _colorTarget =  _device.newTextureWithDescriptor(renderTargetDesc);
+    _colorTarget =  _device.NewTexture(renderTargetDesc);
 
     // Set up a depth texture target.
     renderTargetDesc.pixelFormat = MTLPixelFormatDepth32Float;
     renderTargetDesc.usage = MTLTextureUsageRenderTarget;
-    id<MTLTexture> depthTarget = _device newTextureWithDescriptor:renderTargetDesc];
+    mtlpp::Texture depthTarget = _device.NewTexture(renderTargetDesc);
 
     // Set up the render pass descriptor with newly created textures.
     _renderPassDescriptor.colorAttachments[0].texture = _colorTarget;
@@ -383,74 +381,53 @@ void createRenderTargetsWithSize(CGSize size)
 }
 
 /// Called whenever view changes orientation or layout is changed
-void mtkView(MTKView * view, drawableSizeWillChange:(CGSize)size)
+void mtkView(MTKView * view, mtlpp::Size size)
 {
     // Update the aspect ratio and projection matrix since the view orientation or size has changed.
-    [self updateProjectionMatrixWithSize:size];
-    [self createRenderTargetsWithSize:size];
+    this.updateProjectionMatrixWithSize(size);
+    this.createRenderTargetsWithSize(size);
 }
 
 //Called whenever the view needs to render
 void drawInMTKView(MTKView* view)
 {
-    NSUInteger frameDataBufferIndex = _frameNumber % AAPLMaxFramesInFlight;
+    unsigned int frameDataBufferIndex = _frameNumber % AAPLMaxFramesInFlight;
 
     dispatch_semaphore_wait(_inFlightSemaphore, DISPATCH_TIME_FOREVER);
 
-    // [self updateSceneState];
+    // this.updateSceneState();
 
     // Render cube to offscreen texture
     {
-        mtlpp::CommandBuffer commandBuffer = [_commandQueue commandBuffer];
-        commandBuffer.label = [ns::String stringWithFormat: "Render CommandBuffer"];
+        mtlpp::CommandBuffer commandBuffer = _commandQueue.CommandBuffer();
+        commandBuffer.SetLabel(ns::String("Render CommandBuffer"));
 
-        id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer
-                                                     renderCommandEncoderWithDescriptor:_renderPassDescriptor];
+        mtlpp::RenderCommandEncoder renderEncoder = commandBuffer.RenderCommandEncoder(_renderPassDescriptor);
         // Render cube
-        renderEncoder.label = "Render Encoder";
-        [renderEncoder pushDebugGroup: "Render Cube"];
+        renderEncoder.SetLabel("Render Encoder");
+        renderEncoder.PushDebugGroup("Render Cube");
 
-        [renderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
-        [renderEncoder setCullMode:MTLCullModeBack];
-        [renderEncoder setRenderPipelineState:_renderPipeline];
-        [renderEncoder setDepthStencilState:_depthState];
+        renderEncoder.SetFrontFacingWinding(mtlpp::Winding::CounterClockwise);
+        renderEncoder.SetCullMode(mtlpp::CullMode::Back);
+        renderEncoder.SetRenderPipelineState(_renderPipeline);
+        renderEncoder.SetDepthStencilState(_depthState);
+        renderEncoder.SetVertexBuffer(_positionBuffer, 0, AAPLBufferIndexMeshPositions);
+        renderEncoder.SetVertexBuffer(_texCoordBuffer, 0, AAPLBufferIndexMeshGenerics);
+        renderEncoder.SetVertexBuffer(_frameDataBuffer[frameDataBufferIndex], 0, AAPLBufferIndexFrameData);
+        renderEncoder.SetFragmentBuffer(_frameDataBuffer[frameDataBufferIndex], 0, AAPLBufferIndexFrameData);
+        renderEncoder.SetFragmentTexture(_colorMap, AAPLTextureIndexColorMap);
+        renderEncoder.DrawIndexed(mtlpp::PrimitiveType::Triangle, 36, mtlpp::IndexType::UInt16, _indexBuffer, 0);
+        renderEncoder.PopDebugGroup();
+        renderEncoder.EndEncoding();
 
-        [renderEncoder setVertexBuffer:_positionBuffer
-                                offset:0
-                               atIndex:AAPLBufferIndexMeshPositions];
-
-        [renderEncoder setVertexBuffer:_texCoordBuffer
-                                offset:0
-                               atIndex:AAPLBufferIndexMeshGenerics];
-
-        [renderEncoder setVertexBuffer:_frameDataBuffer[frameDataBufferIndex]
-                                offset:0
-                               atIndex:AAPLBufferIndexFrameData];
-
-        [renderEncoder setFragmentBuffer:_frameDataBuffer[frameDataBufferIndex]
-                                  offset:0
-                                 atIndex:AAPLBufferIndexFrameData];
-
-        [renderEncoder setFragmentTexture:_colorMap
-                                  atIndex:AAPLTextureIndexColorMap];
-
-        [renderEncoder drawIndexedPrimitives:MTLPrimitiveTypeTriangle
-                                  indexCount:36
-                                   indexType:MTLIndexTypeUInt16
-                                 indexBuffer:_indexBuffer
-                           indexBufferOffset:0];
-
-        [renderEncoder popDebugGroup];
-        [renderEncoder endEncoding];
-
-        [commandBuffer commit];
+        commandBuffer.Commit();
     }
 
     // Use compute pipeline from function in dylib to process offscreen texture
     if(_computePipeline && view.currentDrawable)
     {
-        mtlpp::CommandBuffer commandBuffer = [_commandQueue commandBuffer];
-        commandBuffer.label = [ns::String stringWithFormat:@"Compute CommandBuffer"];
+        mtlpp::CommandBuffer commandBuffer = _commandQueue.CommandBuffer();
+        commandBuffer.SetLabel(ns::String("Compute CommandBuffer"));
 
         __block dispatch_semaphore_t block_sema = _inFlightSemaphore;
         [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer)
@@ -458,21 +435,18 @@ void drawInMTKView(MTKView* view)
             dispatch_semaphore_signal(block_sema);
         }];
 
-        id<MTLComputeCommandEncoder> computeEncoder = [commandBuffer computeCommandEncoder];
+        mtlpp::ComputeCommandEncoder computeEncoder = commandBuffer.ComputeCommandEncoder();
         computeEncoder.label = "Compute Encoder";
-        [computeEncoder setComputePipelineState:_computePipeline];
-        [computeEncoder setTexture:_colorTarget
-                           atIndex:AAPLTextureIndexComputeIn];
-        [computeEncoder setTexture:view.currentDrawable.texture
-                           atIndex:AAPLTextureIndexComputeOut];
-        [computeEncoder dispatchThreads:MTLSizeMake(view.drawableSize.width, view.drawableSize.height, 1)
-                  threadsPerThreadgroup:MTLSizeMake(16, 16, 1)];
+        computeEncoder.SetComputePipelineState(_computePipeline);
+        computeEncoder.SetTexture(_colorTarget, AAPLTextureIndexComputeIn);
+        computeEncoder.SetTexture(view.currentDrawable.texture, AAPLTextureIndexComputeOut);
+        computeEncoder.DispatchThreads(MTLSizeMake(view.drawableSize.width, view.drawableSize.height, 1)
+                  threadsPerThreadgroup:MTLSizeMake(16, 16, 1);
 
-        [computeEncoder endEncoding];
+        computeEncoder.EndEncoding();
 
-        [commandBuffer presentDrawable:view.currentDrawable];
-
-        [commandBuffer commit];
+        commandBuffer.Present(view.currentDrawable);
+        commandBuffer.Commit();
     }
 
 
@@ -480,17 +454,15 @@ void drawInMTKView(MTKView* view)
 }
 
 /// Compile a dylib with the given program string then create a compute pipeline with the dylib
-void compileDylibWithString:(ns::String * programString)
+void compileDylibWithString(ns::String* programString)
 {
     ns::Error *error;
-
-    MTLCompileOptions *options = [MTLCompileOptions new];
+    
+    mtlpp::CompileOptions* options = new mtlpp::CompileOptions();
     options.libraryType = MTLLibraryTypeDynamic;
-    options.installName = [ns::String stringWithFormat:@"@executable_path/userCreatedDylib.metallib"];
+    options.installName = ns::String("@executable_path/userCreatedDylib.metallib";
 
-    mtlpp::Library> lib = [_device newLibraryWithSource:programString
-                                               options:options
-                                                 error:&error];
+    mtlpp::Library lib = _device.NewLibraryWithSource(programString, options, &error);
     if(!lib && error)
     {
         printf("Error compiling library from source: %@", error);
@@ -505,12 +477,12 @@ void compileDylibWithString:(ns::String * programString)
         return;
     }
     
-    mtlpp::ComputePipelineDescriptor *descriptor = [MTLComputePipelineDescriptor new];
-    descriptor.computeFunction = _baseDescriptor.computeFunction;
-    descriptor.insertLibraries = @[dynamicLib];
+    mtlpp::ComputePipelineDescriptor *descriptor = new mtlpp::ComputePipelineDescriptor();
+    descriptor.SetComputeFunction(_baseDescriptor.computeFunction);
+    descriptor.SetinsertLibraries = dynamicLib;
     
     mtlpp::ComputePipelineState previousComputePipeline = _computePipeline;
-    _computePipeline = _device.newComputePipelineStateWithDescriptor(descriptor, MTLPipelineOptionNone, NULL, error);
+    _computePipeline = _device.NewComputePipelineState(descriptor, MTLPipelineOptionNone, NULL, error);
         if(!_computePipeline && error)
         {
             printf("Error creating pipeline library from source library, using previous pipeline: %@", error);
