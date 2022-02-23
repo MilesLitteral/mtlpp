@@ -11,8 +11,8 @@ Implementation of the cross-platform text editing view controller.
 class AAPLEditViewController
 {
     ns::String *_dylibString;
-    CGFloat spaceToBottomValueStartValue;
-    volatile IBOutlet NSLayoutConstraint *spaceToBottomLayoutGuide;
+    double spaceToBottomValueStartValue;
+    volatile ns::Object NSLayoutConstraint *spaceToBottomLayoutGuide;
 };
 
 void viewDidLoad()
@@ -20,7 +20,7 @@ void viewDidLoad()
     //[super viewDidLoad];
     
     ns::Error *error;
-    ns::String *pathToFunction = [[NSBundle mainBundle] pathForResource:@"AAPLUserCompiledFunction.metal"];
+    ns::String *pathToFunction = NSBundle::mainBundle("AAPLUserCompiledFunction.metal");
     ns::String _dylibString = pathToFunction; //encoding:NSUTF8StringEncoding, error:&error
 
     printf("%@ Failed to load kernel string from file: %@", _dylibString, error);

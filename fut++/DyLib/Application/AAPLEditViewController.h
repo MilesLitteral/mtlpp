@@ -16,13 +16,14 @@ Header for the cross-platform text editing view controller.
 #include <MetalKit/MetalKit.h>
 #include "../Renderer/AAPLRenderer.h"
 
-class AAPLEditViewController : PlatformViewController;
+class AAPLEditViewController : PlatformViewController
+{
+    public:
+    #if defined(TARGET_IOS)
+    UITextView *textView;
+    #else
+    NSTextView *textView;
+    #endif
 
-#if defined(TARGET_IOS)
-IBOutlet UITextView *textView;
-#else
-IBOutlet NSTextView *textView;
-#endif
-
-AAPLRenderer *renderer;
-
+    AAPLRenderer *renderer;
+};
