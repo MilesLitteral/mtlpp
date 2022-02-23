@@ -60,13 +60,6 @@ namespace mtlpp
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 
-    enum class LibraryType
-    {
-        TypeStatic  = 1,
-        TypeDynamic = 2,
-    }
-    MTLPP_AVAILABLE(10_11, 8_0);
-
     class FunctionConstant : public ns::Object
     {
     public:
@@ -79,6 +72,35 @@ namespace mtlpp
         bool       IsRequired() const;
     }
     MTLPP_AVAILABLE(10_12, 10_0);
+    
+    enum class FunctionOptions {
+        FunctionOptionNone = 0,
+        FunctionOptionCompileToBinary = 1,
+    };
+
+    class FunctionDescriptor : public ns::Object
+    {
+        private:
+            ns::String                      name;
+            FunctionOptions              options;
+
+        public:
+            FunctionDescriptor();
+            FunctionDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
+
+    
+            void                             SetName(ns::String name);
+            ns::String*                      GetSpecializedName() const;
+            void                             SetSpecializedName(ns::String* specializedName);
+            FunctionConstantValues*          GetConstantValues() const;
+            void                             SetConstantValues(FunctionConstantValues* constantValues);
+
+ 
+            void                             SetOptions(FunctionOptions options);
+
+            ns::Array<mtlpp::BinaryArchive>  GetBinaryArchives();
+            void                             SetBinaryArchives(ns::Array<mtlpp::BinaryArchive> binaryArchives);
+    };
 
     class Function : public ns::Object
     {
@@ -105,8 +127,18 @@ namespace mtlpp
         Version1_0 MTLPP_AVAILABLE(NA, 9_0)     = (1 << 16),
         Version1_1 MTLPP_AVAILABLE(10_11, 9_0)  = (1 << 16) + 1,
         Version1_2 MTLPP_AVAILABLE(10_12, 10_0) = (1 << 16) + 2,
+        Version2_0 = 131072,
+        Version2_1 = 131073,
+        Version2_2 = 131074,
+        Version2_3 = 131075,
+        Version2_4 = 131076,
     }
     MTLPP_AVAILABLE(10_11, 9_0);
+
+    enum class LibraryType {
+        LibraryTypeExecutable = 0,
+        LibraryTypeDynamic = 1,
+    };
 
     class CompileOptions : public ns::Object
     {
@@ -159,22 +191,4 @@ namespace mtlpp
         void NewFunction(const ns::String& functionName, const FunctionConstantValues& constantValues, std::function<void(const Function&, const ns::Error&)> completionHandler) MTLPP_AVAILABLE(10_12, 10_0);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
-
-    class DynamicLibrary : public ns::Object
-    {
-    public:
-        DynamicLibrary() { }
-        DynamicLibrary(const ns::Handle& handle) : ns::Object(handle) { }
-        DynamicLibrary(mtlpp::Library lib)       : ns::Object(lib) { }
-
-        ns::String            GetLabel() const;
-        Device                GetDevice() const;
-        ns::Array<ns::String> GetFunctionNames() const;
-
-        void SetLabel(const ns::String& label);
-
-        Function NewFunction(const ns::String& functionName);
-        Function NewFunction(const ns::String& functionName, const FunctionConstantValues& constantValues, ns::Error* error) MTLPP_AVAILABLE(10_12, 10_0);
-        void NewFunction(const ns::String& functionName, const FunctionConstantValues& constantValues, std::function<void(const Function&, const ns::Error&)> completionHandler) MTLPP_AVAILABLE(10_12, 10_0);
-    }
 }
