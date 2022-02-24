@@ -110,13 +110,14 @@ namespace mtlpp
         Texture NewTexture(const TextureDescriptor& descriptor);
         SamplerState NewSamplerState(const SamplerDescriptor& descriptor);
         Library NewDefaultLibrary();
-        Library NewDefaultLibraryWithBundle(ns::Bundle * bundle, ns::Error ** error) MTLPP_AVAILABLE(10_12, 10_0);
+        Library NewDefaultLibraryWithBundle(const ns::Bundle* bundle, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
         Library NewLibrary(const ns::String& filepath, ns::Error* error);
+        Library NewLibrary(const ns::URL, ns::Error* error) MTLPP_AVAILABLE(10_12, 10_0);;
         Library NewLibrary(const char* source, const CompileOptions& options, ns::Error* error);
         void NewLibrary(const char* source, const CompileOptions& options, std::function<void(const Library&, const ns::Error&)> completionHandler);
-        DynamicLibrary* newDynamicLibrary(const Library* library, ns::Error** error);
-        DynamicLibrary* newDynamicLibrary(const ns::URL* url,     ns::Error** error);
-        BinaryArchive*  newBinaryArchive(const BinaryArchiveDescriptor* descriptor, ns::Error** error);
+        DynamicLibrary* newDynamicLibrary(const Library* library, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
+        DynamicLibrary* newDynamicLibrary(const ns::URL* url,     ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
+        BinaryArchive*  newBinaryArchive(const BinaryArchiveDescriptor* descriptor, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
         RenderPipelineState NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, ns::Error* error);
         RenderPipelineState NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, PipelineOption options, RenderPipelineReflection* outReflection, ns::Error* error);
         void NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, std::function<void(const RenderPipelineState&, const ns::Error&)> completionHandler);
