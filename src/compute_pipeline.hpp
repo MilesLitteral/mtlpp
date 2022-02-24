@@ -33,7 +33,7 @@ namespace mtlpp
         bool                       GetThreadGroupSizeIsMultipleOfThreadExecutionWidth();
         StageInputOutputDescriptor GetStageInputDescriptor() MTLPP_AVAILABLE(10_12, 10_0);
         mtlpp::LinkedFunctions*    GetLinkedFunctions() MTLPP_AVAILABLE(10_12, 10_0);
-        bool                       GetSupportAddingBinaryFunctions() const MTLPP_AVAILABLE(10_12, 10_0);
+        bool                       GetSupportAddingBinaryFunctions() MTLPP_AVAILABLE(10_12, 10_0);
         unsigned int               GetMaxCallStackDepth() MTLPP_AVAILABLE(10_12, 10_0);
 
         void SetLabel(const ns::String& label);
