@@ -181,6 +181,27 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLDevice>)m_ptr newDefaultLibrary] };
     }
 
+    Library Device::NewDefaultLibraryWithBundle(ns::Bundle* bundle, ns::Error ** error)
+    {
+        Validate();
+        NSString* nsSource = [NSString stringWithUTF8String:source];
+        
+        // Error
+        NSError* nsError = NULL;
+        NSError** nsErrorPtr = error ? &nsError : nullptr;
+        id<MTLLibrary> library = [(__bridge id<MTLDevice>)m_ptr newDefaultLibraryWithBundle:bundle
+                                                                             options:(__bridge MTLCompileOptions*)options.GetPtr()
+                                                                             error:nsErrorPtr];
+
+        // Error update
+        if (error && nsError){
+            *error = ns::Handle{ (__bridge void*)nsError };
+        }                            
+
+        return ns::Handle{ (__bridge void*)library };
+    }
+
+    
     Library Device::NewLibrary(const ns::String& filepath, ns::Error* error)
     {
         Validate();
@@ -199,6 +220,24 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)library };
     }
 
+    Library Device::NewLibrary(const ns::URL& url, ns::Error* error)
+    {
+        Validate();
+
+        // Error
+        NSError* nsError = NULL;
+        NSError** nsErrorPtr = error ? &nsError : nullptr;
+
+        id<MTLLibrary> library = [(__bridge id<MTLDevice>)m_ptr newLibraryWithURL:(NSURL *)url error:(NSError * _Nullable *)error;];
+
+        // Error update
+        if (error && nsError){
+            *error = ns::Handle{ (__bridge void*)nsError };
+        }  
+
+        return ns::Handle{ (__bridge void*)library };
+    }
+    
     Library Device::NewLibrary(const char* source, const CompileOptions& options, ns::Error* error)
     {
         Validate();
@@ -220,27 +259,6 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)library };
     }
 
-    Library NewDefaultLibraryWithBundle(ns::Bundle* bundle, ns::Error ** error)
-    {
-        Validate();
-        NSString* nsSource = [NSString stringWithUTF8String:source];
-        
-        // Error
-        NSError* nsError = NULL;
-        NSError** nsErrorPtr = error ? &nsError : nullptr;
-        id<MTLLibrary> library = [(__bridge id<MTLDevice>)m_ptr newDefaultLibraryWithBundle:bundle
-                                                                             options:(__bridge MTLCompileOptions*)options.GetPtr()
-                                                                             error:nsErrorPtr];
-
-        // Error update
-        if (error && nsError){
-            *error = ns::Handle{ (__bridge void*)nsError };
-        }                            
-
-        return ns::Handle{ (__bridge void*)library };
-    }
-
-
     void Device::NewLibrary(const char* source, const CompileOptions& options, std::function<void(const Library&, const ns::Error&)> completionHandler)
     {
         Validate();
@@ -254,7 +272,7 @@ namespace mtlpp
                                           }];
     }
 
-    DynamicLibrary* newDynamicLibrary(const Library* library, ns::Error** error);
+    DynamicLibrary* Device::newDynamicLibrary(const Library* library, ns::Error** error);
     {
         Validate();
         NSError* nsError = NULL;
@@ -270,7 +288,7 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)dynamicLibrary };
     }
 
-    DynamicLibrary* newDynamicLibrary(const ns::URL* url, ns::Error** error);
+    DynamicLibrary* Device::newDynamicLibrary(const ns::URL* url, ns::Error** error);
     {
         Validate();
         NSError* nsError = NULL;
@@ -286,12 +304,12 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)dynamicLibrary };
     }
 
-    BinaryArchive* newBinaryArchive(const MTL::BinaryArchiveDescriptor* descriptor, ns::Error** error);
+    BinaryArchive* Device::newBinaryArchive(const MTL::BinaryArchiveDescriptor* descriptor, ns::Error** error);
     {
         Validate();
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;
-        id<MTLBinaryArchive> binaryArchive = [(__bridge id<MTLDevice>)m_ptr newBinaryArchiveWithDescriptor:bundle
+        id<MTLBinaryArchive> binaryArchive = [(__bridge id<MTLDevice>)m_ptr newBinaryArchiveWithDescriptor:descriptor
                                                                              options:(__bridge MTLCompileOptions*)options.GetPtr()
                                                                              error:nsErrorPtr];
         // Error update
@@ -299,7 +317,7 @@ namespace mtlpp
             *error = ns::Handle{ (__bridge void*)nsError };
         }                            
 
-        return ns::Handle{ (__bridge void*)binaryArchive};
+        return ns::Handle{ (__bridge void*)binaryArchive };
     }
 
     // class TileRenderPipelineColorAttachmentDescriptor : public NS::Copying<TileRenderPipelineColorAttachmentDescriptor>
