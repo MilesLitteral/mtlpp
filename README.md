@@ -1,6 +1,6 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/naleksiev/mtlpp/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/naleksiev/mtlpp.svg?branch=master)](https://travis-ci.org/naleksiev/mtlpp)
-## mtlpp - C++ wrapper around Metal
+## mtlpp - C++/Objective-C++ wrapper around Metal
 
 Complete wrapper around Metal (Apple's low-level graphics API).
 
