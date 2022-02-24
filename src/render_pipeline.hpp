@@ -220,7 +220,7 @@ namespace mtlpp
         void                                                           SetObject(TileRenderPipelineColorAttachmentDescriptor* attachment, unsigned int attachmentIndex);
     };
 
-    class TileRenderPipelineDescriptor : public NS::Copying<TileRenderPipelineDescriptor>
+    class TileRenderPipelineDescriptor : public ns::Object
     {
     public:
         TileRenderPipelineDescriptor()
