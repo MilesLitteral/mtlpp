@@ -1,0 +1,69 @@
+tensorflow-metal PluggableDevice
+
+OS Requirements
+
+    macOS 12.0+ (latest beta)
+
+Currently Not Supported
+
+    Multi-GPU support
+    Acceleration for Intel GPUs
+    V1 TensorFlow Networks
+
+Installation Instructions
+Step 1: Environment setup
+x86 : AMD
+
+Create virtual environment (recommended):
+
+python3 -m venv ~/tensorflow-metal
+source ~/tensorflow-metal/bin/activate
+python -m pip install -U pip
+
+NOTE: python version 3.8 required
+arm64 : Apple Silicon
+
+Download and install Conda env:
+
+chmod +x ~/Downloads/Miniforge3-MacOSX-arm64.sh
+sh ~/Downloads/Miniforge3-MacOSX-arm64.sh
+source ~/miniforge3/bin/activate
+
+Install the TensorFlow dependencies:
+
+conda install -c apple tensorflow-deps
+
+    When upgrading to new base TensorFlow version, we recommend:
+
+    # uninstall existing tensorflow-macos and tensorflow-metal
+    python -m pip uninstall tensorflow-macos
+    python -m pip uninstall tensorflow-metal
+    # Upgrade tensorflow-deps
+    conda install -c apple tensorflow-deps --force-reinstall
+    # or point to specific conda environment
+    conda install -c apple tensorflow-deps --force-reinstall -n my_env
+
+    tensorflow-deps versions are following base TensorFlow versions so:
+
+        For v2.5:
+
+        conda install -c apple tensorflow-deps==2.5.0
+
+        For v2.6:
+
+        conda install -c apple tensorflow-deps==2.6.0
+
+NOTE: python versions 3.8 and 3.9 supported
+Step 2: Install base TensorFlow
+
+python -m pip install tensorflow-macos
+
+NOTE: If using conda environment built against pre-macOS 11 SDK use:
+
+SYSTEM_VERSION_COMPAT=0 python -m pip install tensorflow-macos
+
+otherwise you will get errors like : “not a supported wheel on this platform”
+Step 3: Install tensorflow-metal plugin
+
+python -m pip install tensorflow-metal
+
