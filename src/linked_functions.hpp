@@ -2,7 +2,7 @@
 #include "mtlpp.hpp" 
 
 namespace mtlpp {
-    class LinkedFunctions : public NS::Copying<LinkedFunctions>
+    class LinkedFunctions : public ns::Object
     {
         public:
             LinkedFunctions();
