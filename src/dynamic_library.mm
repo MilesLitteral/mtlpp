@@ -18,7 +18,7 @@ namespace mtlpp
         
         void mtlpp::DynamicLibrary::SetDevice(ns::String* _device){
                 Validate();
-                return [(id<MTLDevice> device)m_ptr device.GetPtr()]
+                [(id<MTLDevice> device)m_ptr device.GetPtr()]
         };
 
         NSString* mtlpp::DynamicLibrary::GetLabel(){
@@ -28,7 +28,7 @@ namespace mtlpp
 
         void mtlpp::DynamicLibrary::SetLabel(ns::String* _label){
                 Validate();
-                return [(NSString device)m_ptr label.GetPtr()]
+                [(NSString device)m_ptr label.GetPtr()]
         }
 
         NSString* mtlpp::DynamicLibrary::GetInstallName(){
@@ -38,7 +38,7 @@ namespace mtlpp
 
         NSString* mtlpp::DynamicLibrary::SetInstallName(ns::String* _installName){
                 Validate();
-                return [(id<MTLDevice> device)m_ptr installName.GetPtr()]
+                [(id<MTLDevice> device)m_ptr installName.GetPtr()]
         }
 
         bool mtlpp::DynamicLibrary::SerializeToURL(const ns::URL* url, ns::Error** error){
