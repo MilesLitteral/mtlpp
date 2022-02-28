@@ -22,21 +22,21 @@ Implementation of vector, matrix, and quaternion math utility functions useful f
 
 uint32_t seed_lo, seed_hi;
 
-static float inline F16ToF32(const __fp16 *address) {
+static float inline F16ToF32(const float16_t* address) {
     return *address;
 }
 
 float AAPL_SIMD_OVERLOAD float32_from_float16(uint16_t i) {
-    return F16ToF32((__fp16*) &i);
+    return F16ToF32((float16_t*) &i);
 }
 
-static inline void F32ToF16(float F32, __fp16 *F16Ptr) {
+static inline void F32ToF16(float F32, float16_t* F16Ptr) {
     *F16Ptr = F32;
 }
 
 uint16_t AAPL_SIMD_OVERLOAD float16_from_float32(float f) {
     uint16_t f16;
-    F32ToF16(f, (__fp16 *) &f16);
+    F32ToF16(f, (float16_t*) &f16);
     return f16;
 }
 
