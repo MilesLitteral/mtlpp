@@ -45,7 +45,27 @@ void mtlAddArrays(const float* inA,
               //Pointer for Any Errors generated
               ns::Error* error; //nullptr
 
+    
+          MetalEngine()
+          {
+                _mDevice = mtlpp::Device::CreateSystemDefaultDevice();
+                ns::Error* error = NULL;
 
+                // Load the shader files with a .metal file extension in the project
+
+                mtlpp::Library defaultLibrary = _mDevice.NewLibrary("fut.metallib", error);
+                if (defaultLibrary.GetFunctionNames() == NULL)
+                {
+                    printf("Failed to find the default library.\n");
+
+                }
+                mtlpp::Function addFunction = defaultLibrary.NewFunction("Mtl");
+
+                // Create a compute pipeline state object.
+                _mFunctionPSO =  _mDevice.NewComputePipelineState(addFunction, error);
+            
+                _mCommandQueue = _mDevice.NewCommandQueue();
+          }
       
           MetalEngine(mtlpp::Device device)
           {
@@ -221,16 +241,14 @@ void mtlAddArrays(const float* inA,
           }
 
 
-          void execute(int argc, const char* argv[]){
-            mtlpp::Device device = mtlpp::Device::CreateSystemDefaultDevice();
-
+          void execute(){
             // Create the custom object used to encapsulate the Metal code.
             // Initializes objects to communicate with the GPU.
-            MetalEngine engine = MetalEngine(device);
+            MetalEngine engine = MetalEngine();
             //MetalEngine engineAlt = MetalEngine(argv, device);
 
             // Create buffers to hold data
-            engine.prepareData(device);
+            engine.prepareData(engine._mDevice);
             
             // Send a command to the GPU to perform the calculation.
             engine.sendComputeCommand(engine._mCommandQueue);
@@ -238,19 +256,3 @@ void mtlAddArrays(const float* inA,
             printf("Execution finished\n");
           }
 };
-
-int main(int argc, char * argv[]){
-        mtlpp::Device device = mtlpp::Device::CreateSystemDefaultDevice();
-
-        // Create the custom object used to encapsulate the Metal code.
-        // Initializes objects to communicate with the GPU.
-        MetalEngine adder = MetalEngine(device);
-        
-        // Create buffers to hold data
-        adder.prepareData(device);
-        
-        // Send a command to the GPU to perform the calculation.
-        adder.sendComputeCommand(adder._mCommandQueue);
-
-        printf("Execution finished\n");
-}
