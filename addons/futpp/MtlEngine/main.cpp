@@ -88,7 +88,27 @@ void mtlAddArrays(const float* inA,
               _mCommandQueue = device.NewCommandQueue();
           }
 
-          MetalEngine(ns::String mtlFunction, mtlpp::Device device)
+          //By Default, Metallib is made at compilation time however this is an 
+          //alternative constructor to run const chars as Metal Scripts
+          //Possibly more Important for Futhark
+          MetalEngine(const char *src, ns::String functionName, mtlpp::Device device){
+
+              _mDevice = device; 
+
+              error = NULL; //nullptr
+              mtlpp::Library library  = device.NewLibrary(src, mtlpp::CompileOptions(), error);
+              assert(library);
+              mtlpp::Function Func = library.NewFunction(functionName);
+              assert(Func);
+
+              _mFunctionPSO = device.NewComputePipelineState(Func, error);
+              assert(_mFunctionPSO);
+
+              _mCommandQueue = device.NewCommandQueue();
+              assert(_mCommandQueue);
+          }
+
+       MetalEngine(ns::String mtlFunction, mtlpp::Device device)
           {
               _mDevice = device;
               //device.NewDefaultLibrary();
@@ -109,26 +129,6 @@ void mtlAddArrays(const float* inA,
               _mFunctionPSO = device.NewComputePipelineState(Function, error);
           
               _mCommandQueue = device.NewCommandQueue();
-          }
-
-          //By Default, Metallib is made at compilation time however this is an 
-          //alternative constructor to run const chars as Metal Scripts
-          //Possibly more Important for Futhark
-          MetalEngine(const char src[], ns::String functionName, mtlpp::Device device){
-
-              _mDevice = device; 
-
-              error = NULL; //nullptr
-              mtlpp::Library library  = device.NewLibrary(src, mtlpp::CompileOptions(), error);
-              assert(library);
-              mtlpp::Function Func = library.NewFunction(functionName);
-              assert(Func);
-
-              _mFunctionPSO = device.NewComputePipelineState(Func, error);
-              assert(_mFunctionPSO);
-
-              _mCommandQueue = device.NewCommandQueue();
-              assert(_mCommandQueue);
           }
 
           void generateRandomFloatData(mtlpp::Buffer buffer)
@@ -221,7 +221,7 @@ void mtlAddArrays(const float* inA,
           }
 
 
-          void execute(int argc, const char* argv[]){
+          void execute(){
             mtlpp::Device device = mtlpp::Device::CreateSystemDefaultDevice();
 
             // Create the custom object used to encapsulate the Metal code.
@@ -237,6 +237,41 @@ void mtlAddArrays(const float* inA,
 
             printf("Execution finished\n");
           }
+
+        void execute(const char argv[]){
+            mtlpp::Device device = mtlpp::Device::CreateSystemDefaultDevice();
+
+            // Create the custom object used to encapsulate the Metal code.
+            // Initializes objects to communicate with the GPU.
+            MetalEngine engine = MetalEngine(argv, "DummyFunction", device);
+            //MetalEngine engineAlt = MetalEngine(argv, device);
+
+            // Create buffers to hold data
+            engine.prepareData(device);
+            
+            // Send a command to the GPU to perform the calculation.
+            engine.sendComputeCommand(engine._mCommandQueue);
+
+            printf("Execution finished\n");
+          }
+
+          void execute(const char argv[], ns::String functionName){
+            mtlpp::Device device = mtlpp::Device::CreateSystemDefaultDevice();
+
+            // Create the custom object used to encapsulate the Metal code.
+            // Initializes objects to communicate with the GPU.
+            MetalEngine engine = MetalEngine(argv, functionName, device);
+            //MetalEngine engineAlt = MetalEngine(argv, device);
+
+            // Create buffers to hold data
+            engine.prepareData(device);
+            
+            // Send a command to the GPU to perform the calculation.
+            engine.sendComputeCommand(engine._mCommandQueue);
+
+            printf("Execution finished\n");
+          }
+          
 };
 
 int main(int argc, char * argv[]){
