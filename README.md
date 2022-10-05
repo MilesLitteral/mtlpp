@@ -44,4 +44,4 @@ int main()
     mtkView.device = (__bridge id<MTLDevice>)device.GetPtr();
 ```
 
-This Version has support for later MSL version features (Dynamic Library creation, Binary Archives, etc)
+This version has additional support for later MSL version features (Dynamic Library creation, Binary Archives, etc)
