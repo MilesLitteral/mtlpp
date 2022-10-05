@@ -43,3 +43,5 @@ int main()
     // C++ to Objective-C
     mtkView.device = (__bridge id<MTLDevice>)device.GetPtr();
 ```
+
+This Version has support for later MSL version features (Dynamic Library creation, Binary Archives, etc)
