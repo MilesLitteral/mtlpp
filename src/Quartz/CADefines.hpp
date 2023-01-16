@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "../Foundation/NSDefines.hpp"
+#include "../ns.hpp"
 
 
 #define _CA_EXPORT _NS_EXPORT
