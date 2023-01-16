@@ -4,7 +4,7 @@
  */
 
 /*
- * Copyright 2016-2017 Nikolay Aleksiev. All rights reserved.
+ * Copyright 2020-2021 Miles J. Litteral All rights reserved.
  * License: https://github.com/MilesLitteral/mtlpp/blob/master/LICENSE
  */
 
@@ -32,7 +32,7 @@
 #include "texture.hpp"
 #include "heap.hpp"
 
-//mtlpp 2.0
+// MTLPP 2.0
 # include "ns.hpp"
 # include "binary_archive.hpp"
 # include "dynamic_library.hpp"
