@@ -39,6 +39,7 @@ files=()
 # mtlpp.hpp
 echo "/*" > $output_hpp
 echo " * Copyright 2016-2017 Nikolay Aleksiev. All rights reserved." >> $output_hpp
+echo " * Copyright 2021-2023 Miles J. Litteral. All rights reserved." >> $output_mm
 echo " * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE" >> $output_hpp
 echo " */" >> $output_hpp
 echo "" >> $output_hpp
@@ -48,7 +49,8 @@ solve $output_hpp $input_hpp
 
 # mtlpp.mm
 echo "/*" > $output_mm
-echo " * Copyright 2016-2017 Nikolay Aleksiev. All rights reserved." >> $output_mm
+echo " * Copyright 2016-2017 Nikolay  Aleksiev. All rights reserved." >> $output_mm
+echo " * Copyright 2021-2023 Miles J. Litteral. All rights reserved." >> $output_mm
 echo " * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE" >> $output_mm
 echo " */" >> $output_mm
 echo "#include \"mtlpp.hpp\"" >> $output_mm

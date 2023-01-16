@@ -25,3 +25,9 @@
 #include "sampler.hpp"
 #include "texture.hpp"
 #include "heap.hpp"
+
+// QUARTZPP
+#include "Quartz/CADefines.hpp" 
+#include "Quartz/CAPrivate.hpp" 
+#include "Quartz/CAMetalDrawable.hpp" 
+#include "Quartz/QuartzCore.hpp" 
