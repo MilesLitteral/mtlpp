@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../mtlpp.hpp"
 #include "CADefines.hpp"
 #include "CAPrivate.hpp"
 
