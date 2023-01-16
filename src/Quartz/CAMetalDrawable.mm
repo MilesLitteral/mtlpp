@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../mtlpp.hpp"
 #include "CAMetalDrawable.hpp"
 
 namespace CA
