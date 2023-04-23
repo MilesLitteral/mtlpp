@@ -47,12 +47,12 @@ int main()
 This version has additional support for later MSL version features (Dynamic Library creation, Binary Archives, etc)
 
 ## Compile metallib from .metal shaders:
-```xcrun -sdk macosx metal -c MyLibrary.metal -o MyLibrary.air
+```xcrun -sdk macosx metal -c MyLibrary.metal -o MyLibrary.air```
    xcrun -sdk macosx metallib MyLibrary.air   -o MyLibrary.metallib```
 
 ## Precompile Shaders on the Command Line
-```xcrun -sdk macosx metal -Os MyLibrary.metal
-xcrun -sdk macosx metal -Os MyLibrary.metal```
+```xcrun -sdk macosx metal -Os MyLibrary.metal```
+```xcrun -sdk macosx metal -Os MyLibrary.metal```
 
 ## Generate a Symbol File with a Single Command (For Dylib/Dynamic Linking support of a .metallib)
 ```xcrun -sdk macosx metal -frecord-sources=flat Shadow.metal PointLights.metal DirectionalLight.metal```
