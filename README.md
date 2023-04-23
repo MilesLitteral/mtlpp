@@ -65,11 +65,11 @@ Compile each Metal source file to a Metal AIR (Apple Intermediate Representation
 Generate a Metal library with the source by linking its AIR files.
 
 Separate the library’s source and save it as a companion symbol file.
-First, compile each Metal source file to a Metal AIR file by passing the -c option to the compiler.
+First, compile each Metal source file to a Metal AIR file by passing the -c option to the compiler:
 
-```xcrun -sdk macosx metal -c -frecord-sources Shadow.metal
-xcrun -sdk macosx metal -c -frecord-sources PointLights.metal
-xcrun -sdk macosx metal -c -frecord-sources DirectionalLight.metal```
+```xcrun -sdk macosx metal -c -frecord-sources Shadow.metal```
+```xcrun -sdk macosx metal -c -frecord-sources PointLights.metal```
+```xcrun -sdk macosx metal -c -frecord-sources DirectionalLight.metal```
 The -frecord-sources option tells the Metal compiler to embed the symbols in the AIR output file for that command. However, this command doesn’t create a separate symbols file at this time, which is why the -frecord-sources option doesn’t include the =flat suffix.
 
 Next, generate a Metal library by linking the AIR files.
