@@ -76,8 +76,8 @@ namespace mtlpp {
         ns::String*                                 GetLabel();
         void                                        SetLabel(const ns::String* label);
 
-        mtlpp::StorageMode                          GetStorageMode();
-        void                                        SetStorageMode(const mtlpp::StorageMode storageMode);
+        mtlpp::StorageMode::StorageMode                          GetStorageMode();
+        void                                        SetStorageMode(const mtlpp::StorageMode::StorageMode storageMode);
 
         unsigned int                                GetSampleCount();
         void                                        SetSampleCount(const unsigned int sampleCount);

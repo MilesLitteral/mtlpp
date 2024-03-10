@@ -86,7 +86,7 @@ namespace mtlpp
     bool BinaryArchive::addFunction(const class FunctionDescriptor* descriptor, const class Library* library, ns::Error** error){
         Validate();
         #if MTLPP_IS_AVAILABLE_MAC(10_11)
-        return [(__bridge id<MTLBinaryArchive>)m_ptr) addFunctionWithDescriptor:(MTLFunctionDescriptor *)descriptor 
+        return [(__bridge id<MTLBinaryArchive>)m_ptr addFunctionWithDescriptor:(MTLFunctionDescriptor *)descriptor 
                     library:(id<MTLLibrary>)library 
                     error:(NSError * _Nullable *)error];
             #else

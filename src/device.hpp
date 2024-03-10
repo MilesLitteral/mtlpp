@@ -92,32 +92,32 @@ namespace mtlpp
         static ns::Array<Device> CopyAllDevices() MTLPP_AVAILABLE(10_11, NA);
 
         ns::String GetName() const;
-        Size       GetMaxThreadsPerThreadgroup() const MTLPP_AVAILABLE(10_11, 9_0);
+        mtlpp::Size       GetMaxThreadsPerThreadgroup() const MTLPP_AVAILABLE(10_11, 9_0);
         bool       IsLowPower() const MTLPP_AVAILABLE_MAC(10_11);
         bool       IsHeadless() const MTLPP_AVAILABLE_MAC(10_11);
         uint64_t   GetRecommendedMaxWorkingSetSize() const MTLPP_AVAILABLE_MAC(10_12);
         bool       IsDepth24Stencil8PixelFormatSupported() const MTLPP_AVAILABLE_MAC(10_11);
 
-        CommandQueue NewCommandQueue();
-        CommandQueue NewCommandQueue(uint32_t maxCommandBufferCount);
+        mtlpp::CommandQueue NewCommandQueue();
+        mtlpp::CommandQueue NewCommandQueue(uint32_t maxCommandBufferCount);
         SizeAndAlign HeapTextureSizeAndAlign(const TextureDescriptor& desc) MTLPP_AVAILABLE(NA, 10_0);
-        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions::ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
-        Heap NewHeap(const HeapDescriptor& descriptor) MTLPP_AVAILABLE(NA, 10_0);
-        Buffer NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options);
-        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions::ResourceOptions options);
-        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions::ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
+        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, mtlpp::ResourceOptions::ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
+        mtlpp::Heap NewHeap(const HeapDescriptor& descriptor) MTLPP_AVAILABLE(NA, 10_0);
+        mtlpp::Buffer NewBuffer(uint32_t length, mtlpp::ResourceOptions::ResourceOptions options);
+        mtlpp::Buffer NewBuffer(const void* pointer, uint32_t length, mtlpp::ResourceOptions::ResourceOptions options);
+        mtlpp::Buffer NewBuffer(void* pointer, uint32_t length, mtlpp::ResourceOptions::ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
         DepthStencilState NewDepthStencilState(const DepthStencilDescriptor& descriptor);
         Texture NewTexture(const TextureDescriptor& descriptor);
-        SamplerState NewSamplerState(const SamplerDescriptor& descriptor);
+        mtlpp::SamplerState NewSamplerState(const mtlpp::SamplerDescriptor& descriptor);
         Library NewDefaultLibrary();
         Library NewDefaultLibraryWithBundle(const ns::Bundle* bundle, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
         Library NewLibrary(const ns::String& filepath, ns::Error* error);
         Library NewLibrary(const ns::URL, ns::Error* error) MTLPP_AVAILABLE(10_12, 10_0);;
         Library NewLibrary(const char* source, const CompileOptions& options, ns::Error* error);
         void NewLibrary(const char* source, const CompileOptions& options, std::function<void(const Library&, const ns::Error&)> completionHandler);
-        DynamicLibrary* newDynamicLibrary(const Library* library, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
-        DynamicLibrary* newDynamicLibrary(const ns::URL* url,     ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
-        BinaryArchive*  newBinaryArchive(const BinaryArchiveDescriptor* descriptor, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
+        mtlpp::DynamicLibrary* newDynamicLibrary(const Library* library, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
+        mtlpp::DynamicLibrary* newDynamicLibrary(const ns::URL* url,     ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
+        mtlpp::BinaryArchive*  newBinaryArchive(const mtlpp::BinaryArchiveDescriptor* descriptor, ns::Error** error) MTLPP_AVAILABLE(10_12, 10_0);
         RenderPipelineState NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, ns::Error* error);
         RenderPipelineState NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, PipelineOption options, RenderPipelineReflection* outReflection, ns::Error* error);
         void NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, std::function<void(const RenderPipelineState&, const ns::Error&)> completionHandler);
@@ -128,7 +128,7 @@ namespace mtlpp
         void NewComputePipelineState(const Function& computeFunction, PipelineOption options, std::function<void(const ComputePipelineState&, const ComputePipelineReflection&, const ns::Error&)> completionHandler);
         ComputePipelineState NewComputePipelineState(const ComputePipelineDescriptor& descriptor, PipelineOption options, ComputePipelineReflection* outReflection, ns::Error* error);
         void NewComputePipelineState(const ComputePipelineDescriptor& descriptor, PipelineOption options, std::function<void(const ComputePipelineState&, const ComputePipelineReflection&, const ns::Error&)> completionHandler) MTLPP_AVAILABLE(10_11, 9_0);
-        Fence NewFence() MTLPP_AVAILABLE(NA, 10_0);
+        mtlpp::Fence NewFence() MTLPP_AVAILABLE(NA, 10_0);
         bool SupportsFeatureSet(FeatureSet featureSet) const;
         bool SupportsTextureSampleCount(uint32_t sampleCount) const MTLPP_AVAILABLE(10_11, 9_0);
     }

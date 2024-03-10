@@ -1,21 +1,23 @@
 namespace mtlpp {
     void setComputePipelineState(mtlpp::ComputePipelineState state){
-
+        [(__bridge id<MTLComputePipelineState>)m_ptr
+            setComputePipelineState:(__bridge id<MTLTexture>)texture.GetPtr()
+            state:width
+        ]
     };
 
-    void setImageblockWidth(int, int height){
-
+    void setImageblockWidth(int width){
+        [(__bridge id<MTLComputePipelineState>)m_ptr
+            setImageblockWidth:(__bridge id<MTLTexture>)texture.GetPtr()
+            width:width
+        ]
     };
 
     void setKernelBuffer(mtlpp::Buffer, int offset, int at){
 
     };
     
-    void setThreadgroupMemoryLength(int, int index){
-
-    };
-
-    void setThreadgroupMemoryLength(int, int at){
+    void setThreadgroupMemoryLength(int index){
 
     };
 

@@ -1,3 +1,5 @@
+#include "ns.hpp"
+
 namespace mtlpp {
     struct Region{
         //Overview
@@ -11,11 +13,14 @@ namespace mtlpp {
         // init(origin: mtlpp::Origin, size: mtlpp::Size);
 
         //Initializes a new region with the specified origin and size.
-        mtlpp::Region MTLRegionMake1D(Int, Int);
+        mtlpp::Region MTLRegionMake1D(ns::Int, ns::Int);
+
         //Creates a 3D representation of a 1D region.
-        mtlpp::Region MTLRegionMake2D(Int, Int, Int, Int);
+        mtlpp::Region MTLRegionMake2D(ns::Int, ns::Int, ns::Int, ns::Int);
+
         //Creates a 3D representation of a 2D region.
-        mtlpp::Region MTLRegionMake3D(Int, Int, Int, Int, Int, Int);
+        mtlpp::Region MTLRegionMake3D(ns::Int, ns::Int, ns::Int, ns::Int, ns::Int, ns::Int);
+        
         //Creates a 3D region.
         //Getting and Setting Region Information
         mtlpp::Origin origin;

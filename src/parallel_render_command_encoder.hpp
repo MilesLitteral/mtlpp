@@ -22,9 +22,9 @@ namespace mtlpp
 
         RenderCommandEncoder GetRenderCommandEncoder();
 
-        void SetColorStoreAction(StoreAction storeAction, uint32_t colorAttachmentIndex) MTLPP_AVAILABLE(10_12, 10_0);
-        void SetDepthStoreAction(StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
-        void SetStencilStoreAction(StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetColorStoreAction(mtlpp::StoreAction::StoreAction storeAction, uint32_t colorAttachmentIndex) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetDepthStoreAction(mtlpp::StoreAction::StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetStencilStoreAction(mtlpp::StoreAction::StoreAction storeAction) MTLPP_AVAILABLE(10_12, 10_0);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 }

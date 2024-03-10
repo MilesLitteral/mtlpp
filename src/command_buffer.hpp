@@ -32,13 +32,13 @@ namespace mtlpp
         OutOfMemory                               = 8,
         InvalidResource                           = 9,
         Memoryless      MTLPP_AVAILABLE_IOS(10_0) = 10,
-    }
+    };
     MTLPP_AVAILABLE(10_11, 8_0);
 
     enum class DispatchType {
         concurrent = 0,
         serial     = 1
-    }
+    };
     MTLPP_AVAILABLE(10_11, 8_0);
 
     class CommandBuffer : public ns::Object
@@ -48,10 +48,10 @@ namespace mtlpp
         CommandBuffer(const ns::Handle& handle) : ns::Object(handle) { }
 
         Device              GetDevice() const;
-        CommandQueue        GetCommandQueue() const;
+        mtlpp::CommandQueue        GetCommandQueue() const;
         bool                GetRetainedReferences() const;
         ns::String          GetLabel() const;
-        CommandBufferStatus GetStatus() const;
+        mtlpp::CommandBufferStatus GetStatus() const;
         ns::Error           GetError() const;
         double              GetKernelStartTime() const MTLPP_AVAILABLE_IOS(10_3);
         double              GetKernelEndTime() const MTLPP_AVAILABLE_IOS(10_3);
@@ -64,15 +64,15 @@ namespace mtlpp
         void Commit();
         void AddScheduledHandler(std::function<void(const CommandBuffer&)> handler);
         void AddCompletedHandler(std::function<void(const CommandBuffer&)> handler);
-        void Present(const Drawable& drawable);
-        void PresentAtTime(const Drawable& drawable, double presentationTime);
-        void PresentAfterMinimumDuration(const Drawable& drawable, double duration) MTLPP_AVAILABLE_IOS(10_3);
+        void Present(const mtlpp::Drawable& drawable);
+        void PresentAtTime(const mtlpp::Drawable& drawable, double presentationTime);
+        void PresentAfterMinimumDuration(const mtlpp::Drawable& drawable, double duration) MTLPP_AVAILABLE_IOS(10_3);
         void WaitUntilScheduled();
         void WaitUntilCompleted();
-        BlitCommandEncoder BlitCommandEncoder();
+        mtlpp::BlitCommandEncoder BlitCommandEncoder();
         RenderCommandEncoder RenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor);
-        ComputeCommandEncoder ComputeCommandEncoder();
-        ParallelRenderCommandEncoder ParallelRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor);
-    }
+        mtlpp::ComputeCommandEncoder ComputeCommandEncoder();
+        mtlpp::ParallelRenderCommandEncoder ParallelRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor);
+    };
     MTLPP_AVAILABLE(10_11, 8_0);
 }

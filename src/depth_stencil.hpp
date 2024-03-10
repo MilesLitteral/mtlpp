@@ -45,17 +45,17 @@ namespace mtlpp
         StencilDescriptor();
         StencilDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
-        CompareFunction::CompareFunction  GetStencilCompareFunction() const;
-        StencilOperation GetStencilFailureOperation() const;
-        StencilOperation GetDepthFailureOperation() const;
-        StencilOperation GetDepthStencilPassOperation() const;
+        mtlpp::CompareFunction::CompareFunction  GetStencilCompareFunction() const;
+        mtlpp::StencilOperation GetStencilFailureOperation() const;
+        mtlpp::StencilOperation GetDepthFailureOperation() const;
+        mtlpp::StencilOperation GetDepthStencilPassOperation() const;
         uint32_t         GetReadMask() const;
         uint32_t         GetWriteMask() const;
 
-        void SetStencilCompareFunction(CompareFunction::CompareFunction stencilCompareFunction);
-        void SetStencilFailureOperation(StencilOperation stencilFailureOperation);
-        void SetDepthFailureOperation(StencilOperation depthFailureOperation);
-        void SetDepthStencilPassOperation(StencilOperation depthStencilPassOperation);
+        void SetStencilCompareFunction(mtlpp::CompareFunction::CompareFunction stencilCompareFunction);
+        void SetStencilFailureOperation(mtlpp::StencilOperation stencilFailureOperation);
+        void SetDepthFailureOperation(mtlpp::StencilOperation depthFailureOperation);
+        void SetDepthStencilPassOperation(mtlpp::StencilOperation depthStencilPassOperation);
         void SetReadMask(uint32_t readMask);
         void SetWriteMask(uint32_t writeMask);
     }
@@ -67,13 +67,13 @@ namespace mtlpp
         DepthStencilDescriptor();
         DepthStencilDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
-        CompareFunction::CompareFunction   GetDepthCompareFunction() const;
+        mtlpp::CompareFunction::CompareFunction   GetDepthCompareFunction() const;
         bool              IsDepthWriteEnabled() const;
         StencilDescriptor GetFrontFaceStencil() const;
         StencilDescriptor GetBackFaceStencil() const;
         ns::String        GetLabel() const;
 
-        void SetDepthCompareFunction(CompareFunction::CompareFunction depthCompareFunction) const;
+        void SetDepthCompareFunction(mtlpp::CompareFunction::CompareFunction depthCompareFunction) const;
         void SetDepthWriteEnabled(bool depthWriteEnabled) const;
         void SetFrontFaceStencil(const StencilDescriptor& frontFaceStencil) const;
         void SetBackFaceStencil(const StencilDescriptor& backFaceStencil) const;

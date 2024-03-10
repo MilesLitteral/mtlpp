@@ -1,7 +1,7 @@
 #include "ns.hpp"
 
 namespace mtlpp {
-    class MTLAccelerationStructureDescriptor : ns::Object {
+    class AccelerationStructureDescriptor : ns::Object {
         //Overview
         //This is the base class for other acceleration structure descriptors. Don’t use this class directly. Use one of the derived classes instead, as MTLAccelerationStructure describes.
 

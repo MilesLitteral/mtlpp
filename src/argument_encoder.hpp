@@ -74,16 +74,16 @@ namespace mtlpp {
         // Encodes an array of indirect command buffers into the argument buffer.
 
         // Encoding Acceleration Structures
-        void setAccelerationStructure(mtlpp::AccelerationStructure?,  int index)
+        void setAccelerationStructure(mtlpp::AccelerationStructure,  int index);
         // Encodes a reference to an acceleration structure into the argument buffer.
         // Required.
 
         //Encoding Function Tables
-        void setVisibleFunctionTable(mtlpp::VisibleFunctionTable?,    int index)
+        void setVisibleFunctionTable(mtlpp::VisibleFunctionTable vfTable,    int index);
         // Encodes a reference to a function table into the argument buffer.
         // Required.
 
-        void setIntersectionFunctionTable(mtlpp::IntersectionFunctionTable?, int index)
+        void setIntersectionFunctionTable(mtlpp::IntersectionFunctionTable ifTable, int index);
         // Encodes a reference to a ray-tracing intersection function table into the argument buffer.
         // Required.
 

@@ -30,6 +30,7 @@ namespace mtlpp {
     void IndirectRenderCommand::drawPrimitives(mtlpp::PrimitiveType, vertexStart: Int, vertexCount: Int, instanceCount: Int, baseInstance: Int){
 
     }
+
     // Encodes a command to render a number of instances of primitives using vertex data in contiguous array elements, starting from the base instance.
     // Required.
 

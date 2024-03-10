@@ -16,18 +16,18 @@ namespace mtlpp {
     class PatchType {
         // Types of tessellation patches that can be inputs of a post-tessellation vertex function.
         // Retrieving Function Attributes
-        mtlpp::VertexAttribute vertexAttributes//: []?
+        mtlpp::VertexAttribute vertexAttributes;//: []?
         // An array that describes the vertex input attributes to a vertex function.
         // Required.
-        var stageInputAttributes//: [MTLAttribute]?
+        mtlpp::Attribute stageInputAttributes;//: [MTLAttribute]?
         // An array that describes the input attributes to the function.
         // Required.
         //Retrieving Function Constants
-        var functionConstantsDictionary//: [String : MTLFunctionConstant]
+        mtlpp::FunctionConstant functionConstantsDictionary;//: [String : MTLFunctionConstant]
         // A dictionary of function constants for a specialized function.
         // Required.
         //Creating Argument Encoders
-        mtlpp::ArgumentEncoder makeArgumentEncoder(bufferIndex: Int);
+        mtlpp::ArgumentEncoder makeArgumentEncoder(int bufferIndex);
         // Creates an argument encoder for an argument buffer that’s one of this function's arguments.
         // Required.
     };
@@ -35,7 +35,7 @@ namespace mtlpp {
     struct FunctionOptions{
         // Options that define how Metal creates the function object.
         // Identifying the Tessellation Patch
-        PatchType patchType; 
+        mtlpp::PatchType patchType; 
         // mtlpp::FunctionOptions options;
         // The tessellation patch type of a post-tessellation vertex function.
         // Required.
@@ -51,8 +51,8 @@ namespace mtlpp {
         //Don’t use standard allocation and initialization techniques to create a MTLFunction object. Instead, use the function creation methods provided by the MTLLibrary protocol. To create a nonspecialized function, call the makeFunction(name:) method.
         //To create a specialized function, call one of these MTLLibrary methods:
 
-        makeFunction(name:constantValues:completionHandler:)
-        makeFunction(name:constantValues:)
+        Function makeFunction(const ns::String name, ns::Handle completionHandler);
+        Function makeFunction(const ns::String name);
         //MTLFunction objects can use a significant amount of memory; release any strong references to them after you finish creating pipeline objects.
 
         //Topics

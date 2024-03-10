@@ -39,11 +39,10 @@ namespace mtlpp
         void SetLabel(const ns::String& label);
         void SetComputeFunction(const Function& function);
         void SetThreadGroupSizeIsMultipleOfThreadExecutionWidth(bool value);
-        void SetStageInputDescriptor(const StageInputOutputDescriptor& stageInputDescriptor) const MTLPP_AVAILABLE(10_12, 10_0);
-        void                                    SetLinkedFunctions(const LinkedFunctions* linkedFunctions) MTLPP_AVAILABLE(10_12, 10_0);   
-        void                                    SetSupportAddingBinaryFunctions(bool supportAddingBinaryFunctions) MTLPP_AVAILABLE(10_12, 10_0);
-        void                                    SetMaxCallStackDepth(unsigned int maxCallStackDepth) MTLPP_AVAILABLE(10_12, 10_0);
-
+        void SetStageInputDescriptor(const StageInputOutputDescriptor& stageInputDescriptor) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetLinkedFunctions(const mtlpp::LinkedFunctions* linkedFunctions)  MTLPP_AVAILABLE(10_12, 10_0);   
+        void SetSupportAddingBinaryFunctions(bool supportAddingBinaryFunctions) MTLPP_AVAILABLE(10_12, 10_0);
+        void SetMaxCallStackDepth(unsigned int maxCallStackDepth)               MTLPP_AVAILABLE(10_12, 10_0);
         void Reset();
     }
     MTLPP_AVAILABLE(10_11, 8_0);

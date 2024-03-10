@@ -1,3 +1,5 @@
+#include "acceleration_structure_descriptor.hpp"
+
 namespace mtlpp{
     class PrimitiveAccelerationStructureDescriptor : mtlpp::AccelerationStructureDescriptor {
         //Overview

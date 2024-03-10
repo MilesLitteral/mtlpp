@@ -1,5 +1,5 @@
 namespace mtlpp {
-    class AccelerationStructureTriangleGeometryDescriptor : MTLAccelerationStructureGeometryDescriptor {
+    class AccelerationStructureTriangleGeometryDescriptor : mtlpp::AccelerationStructureGeometryDescriptor {
         //Topics
         //Specifying the Number of Triangles
         int triangleCount;
