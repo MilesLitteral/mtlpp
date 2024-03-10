@@ -9,6 +9,7 @@
 
 namespace ns
 {
+    typedef unsigned long UInteger;
         struct Handle
         {
             const void* ptr;

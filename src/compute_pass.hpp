@@ -1,4 +1,4 @@
-
+#include "ns.hpp"
 
 namespace mtlpp
 {
@@ -10,11 +10,11 @@ namespace mtlpp
         CounterSampleBuffer*                                      GetSampleBuffer();
         void                                                      SetSampleBuffer(const CounterSampleBuffer* sampleBuffer);
 
-        NS::UInteger                                              GetStartOfEncoderSampleIndex() const;
-        void                                                      SetStartOfEncoderSampleIndex(NS::UInteger startOfEncoderSampleIndex);
+        ns::UInteger                                              GetStartOfEncoderSampleIndex() const;
+        void                                                      SetStartOfEncoderSampleIndex(ns::UInteger startOfEncoderSampleIndex);
 
-        NS::UInteger                                              GetEndOfEncoderSampleIndex() const;
-        void                                                      SetEndOfEncoderSampleIndex(NS::UInteger endOfEncoderSampleIndex);
+        ns::UInteger                                              GetEndOfEncoderSampleIndex() const;
+        void                                                      SetEndOfEncoderSampleIndex(ns::UInteger endOfEncoderSampleIndex);
     };
 
     class ComputePassSampleBufferAttachmentDescriptorArray : public ns::Object
@@ -31,8 +31,8 @@ namespace mtlpp
         ComputePassDescriptor();
         ComputePassDescriptor*                                  GetComputePassDescriptor();
 
-        mtlp::CommandBuffer::DispatchType                       GetDispatchType();
-        void                                                    SetDispatchType(mtlpp::CommandBuffer::DispatchType dispatchType);
+        mtlpp::DispatchType                                     GetDispatchType();
+        void                                                    SetDispatchType(mtlpp::DispatchType dispatchType);
 
         ComputePassSampleBufferAttachmentDescriptorArray*       SampleBufferAttachments();
     };

@@ -37,14 +37,14 @@ namespace mtlpp
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 
-    enum class SamplerBorderColor
+    enum class mtlpp::SamplerBorderColor
     {
         TransparentBlack = 0,  // {0,0,0,0}
         OpaqueBlack = 1,       // {0,0,0,1}
         OpaqueWhite = 2,       // {1,1,1,1}
     };
 
-    class SamplerDescriptor : public ns::Object
+    class mtlpp::SamplerDescriptor : public ns::Object
     {
     public:
         SamplerDescriptor();
@@ -80,13 +80,13 @@ namespace mtlpp
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 
-    class SamplerState : public ns::Object
+    class mtlpp::SamplerState : public ns::Object
     {
     public:
         SamplerState() { }
         SamplerState(const ns::Handle& handle) : ns::Object(handle) { }
 
-        ns::String GetLabel() const;
+        ns::String GetLabel()  const;
         Device     GetDevice() const;
     }
     MTLPP_AVAILABLE(10_11, 8_0);

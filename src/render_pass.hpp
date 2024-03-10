@@ -24,16 +24,16 @@ namespace LoadAction {
 };
 
 namespace StoreAction {
-    enum  StoreAction
-    {
-        DontCare                                               = 0,
-        Store                                                  = 1,
-        MultisampleResolve                                     = 2,
-        StoreAndMultisampleResolve MTLPP_AVAILABLE(10_12,10_0) = 3,
-        Unknown                    MTLPP_AVAILABLE(10_12,10_0) = 4,
-    }
-    MTLPP_AVAILABLE(10_11, 8_0);
-};
+        enum  StoreAction
+        {
+            DontCare                                               = 0,
+            Store                                                  = 1,
+            MultisampleResolve                                     = 2,
+            StoreAndMultisampleResolve MTLPP_AVAILABLE(10_12,10_0) = 3,
+            Unknown                    MTLPP_AVAILABLE(10_12,10_0) = 4,
+        }
+        MTLPP_AVAILABLE(10_11, 8_0);
+    };
     enum class MultisampleDepthResolveFilter
     {
         Sample0 = 0,

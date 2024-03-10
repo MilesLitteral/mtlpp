@@ -4765,3 +4765,140 @@ namespace mtlpp
     }
 }
 
+
+//////////////////////////////////////
+// FILE: binary_archive.mm
+//////////////////////////////////////
+/*
+ * Copyright 2016-2017 Nikolay Aleksiev. All rights reserved.
+ * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE
+ */
+
+// #include "vertex_descriptor.hpp"
+#include <Metal/MTLBinaryArchive.h>
+
+namespace mtlpp
+{
+
+    NSURL BinaryArchiveDescriptor::GetUrl(){
+        Validate();
+        return [(__bridge id<MTLBinaryArchiveDescriptor>)m_ptr url)];
+    }
+        
+    void mtlpp::BinaryArchiveDescriptor::SetUrl(ns::URL* _url){
+        Validate();
+        return [(__bridge id<MTLBinaryArchiveDescriptor>)m_ptr)addTileRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor.GetPtr() 
+                                            error: error];
+    }
+
+    ns::String* BinaryArchive::GetLabel(){
+        Validate();                       
+        return ns::Handle{ (__bridge void*)[(__bridge NSString*)m_ptr label] };
+    }
+
+    void BinaryArchive::SetLabel(const ns::String* label);
+    {
+        Validate();
+        [(__bridge id<MTLBinaryArchive>)m_ptr setLabel:(__bridge NSString*)label.GetPtr()];
+    }
+
+    bool BinaryArchive::addComputePipelineFunctions(const class ComputePipelineDescriptor* descriptor, ns::Error** error){
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr)addComputePipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor 
+                                            error:(NSError * _Nullable *)error];
+        #else
+            return false;
+        #endif
+    };
+
+    bool BinaryArchive::addRenderPipelineFunctions(const class RenderPipelineDescriptor* descriptor, ns::Error** error){
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr)addRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor 
+                                            error:(NSError * _Nullable *)error];
+        #else
+            return false;
+        #endif
+    };
+
+    bool BinaryArchive::addTileRenderPipelineFunctions(const class TileRenderPipelineDescriptor* descriptor, ns::Error** error){
+        Validate();
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr)addTileRenderPipelineFunctionsWithDescriptor:(MTLTileRenderPipelineDescriptor *)descriptor 
+                                            error:(NSError * _Nullable *)error];
+        #else
+            return false;
+        #endif
+    };
+
+    bool BinaryArchive::serializeToURL(const ns::URL* url, ns::Error** error){
+        Validate();
+        [(__bridge id<MTLBinaryArchive>)m_ptr serializeToURL:(NSURL*)url 
+                                                error:(NSError* _Nullable*)error)]
+    };
+
+    bool BinaryArchive::addFunction(const class FunctionDescriptor* descriptor, const class Library* library, ns::Error** error){
+        Validate();
+        #if MTLPP_IS_AVAILABLE_MAC(10_11)
+        return [(__bridge id<MTLBinaryArchive>)m_ptr) addFunctionWithDescriptor:(MTLFunctionDescriptor *)descriptor 
+                    library:(id<MTLLibrary>)library 
+                    error:(NSError * _Nullable *)error];
+            #else
+            return false;
+        #endif
+    };
+
+}
+
+//////////////////////////////////////
+// FILE: dynamic_library.mm
+//////////////////////////////////////
+/*
+ * Copyright 2016-2017 Nikolay Aleksiev. All rights reserved.
+ * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE
+ */
+
+#include "library.hpp"
+#include "device.hpp"
+#include "function_constant_values.hpp"
+#include <Metal/MTLDynamicLibrary.h>
+
+namespace mtlpp
+{
+    (id<MTLDevice>)* mtlpp::DynamicLibrary::GetDevice(){
+            Validate();
+            return [(id<MTLDevice> device)m_ptr device]
+    };
+    
+    void mtlpp::DynamicLibrary::SetDevice(ns::String* _device){
+            Validate();
+            [(id<MTLDevice> device)m_ptr device.GetPtr()]
+    };
+
+    NSString* mtlpp::DynamicLibrary::GetLabel(){
+            Validate();
+            return [(NSString dylib)m_ptr label)]
+    }
+
+    void mtlpp::DynamicLibrary::SetLabel(ns::String* _label){
+            Validate();
+            [(NSString device)m_ptr label.GetPtr()]
+    }
+
+    NSString* mtlpp::DynamicLibrary::GetInstallName(){
+            Validate();
+            return [(id<MTLDevice> device)m_ptr installName]
+    }
+
+    NSString* mtlpp::DynamicLibrary::SetInstallName(ns::String* _installName){
+            Validate();
+            [(id<MTLDevice> device)m_ptr installName.GetPtr()]
+    }
+
+    bool mtlpp::DynamicLibrary::SerializeToURL(const ns::URL* url, ns::Error** error){
+            Validate();
+            return [(__bridge id<MTLDynamicLibrary>)m_ptr serializeToURL:(NSURL*)url error:error)]
+    };
+}
+
+
+

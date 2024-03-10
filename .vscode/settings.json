@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "xutility": "cpp",
+        "chrono": "cpp",
+        "map": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "functional": "cpp",
+        "xlocale": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "filesystem": "cpp",
+        "forward_list": "cpp",
+        "iterator": "cpp",
+        "list": "cpp",
+        "memory": "cpp",
+        "xhash": "cpp",
+        "xmemory": "cpp",
+        "xtree": "cpp",
+        "format": "cpp",
+        "initializer_list": "cpp",
+        "type_traits": "cpp",
+        "ios": "cpp"
+    }
+}

@@ -16,7 +16,7 @@ namespace mtlpp {
             ns::Array<mtlpp::Function>*   GetPrivateFunctions();
             void                          SetPrivateFunctions(const ns::Array<mtlpp::Function>* privateFunctions);
 
-            ns::Array<ns::Dictionary<ns::String*,ns::Array<mtlpp::Function>>* GetGroups();
-            void SetGroups(const ns::Array<ns::Dictionary<ns::String*,ns::Array<mtlpp::Function>>* groups);
+            ns::Array<ns::Dictionary<ns::String*, ns::Array<mtlpp::Function>>* GetGroups();
+            void                          SetGroups(const ns::Array<ns::Dictionary<ns::String*, ns::Array<mtlpp::Function>>* groups);
     };
 }

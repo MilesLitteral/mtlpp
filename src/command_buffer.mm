@@ -3,15 +3,14 @@
  * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE
  */
 
+#include "drawable.hpp"
+#include "render_pass.hpp"
 #include "command_buffer.hpp"
 #include "command_queue.hpp"
-#include "drawable.hpp"
 #include "blit_command_encoder.hpp"
 #include "render_command_encoder.hpp"
 #include "compute_command_encoder.hpp"
 #include "parallel_render_command_encoder.hpp"
-#include "render_pass.hpp"
-
 #include <Metal/MTLCommandBuffer.h>
 
 namespace mtlpp

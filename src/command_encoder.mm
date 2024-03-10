@@ -3,8 +3,8 @@
  * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE
  */
 
-#include "command_encoder.hpp"
 #include "device.hpp"
+#include "command_encoder.hpp"
 #include <Metal/MTLCommandEncoder.h>
 
 namespace mtlpp

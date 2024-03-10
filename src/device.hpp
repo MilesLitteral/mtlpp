@@ -101,11 +101,11 @@ namespace mtlpp
         CommandQueue NewCommandQueue();
         CommandQueue NewCommandQueue(uint32_t maxCommandBufferCount);
         SizeAndAlign HeapTextureSizeAndAlign(const TextureDescriptor& desc) MTLPP_AVAILABLE(NA, 10_0);
-        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
+        SizeAndAlign HeapBufferSizeAndAlign(uint32_t length, ResourceOptions::ResourceOptions options) MTLPP_AVAILABLE(NA, 10_0);
         Heap NewHeap(const HeapDescriptor& descriptor) MTLPP_AVAILABLE(NA, 10_0);
-        Buffer NewBuffer(uint32_t length, ResourceOptions options);
-        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions options);
-        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
+        Buffer NewBuffer(uint32_t length, ResourceOptions::ResourceOptions options);
+        Buffer NewBuffer(const void* pointer, uint32_t length, ResourceOptions::ResourceOptions options);
+        Buffer NewBuffer(void* pointer, uint32_t length, ResourceOptions::ResourceOptions options, std::function<void (void* pointer, uint32_t length)> deallocator);
         DepthStencilState NewDepthStencilState(const DepthStencilDescriptor& descriptor);
         Texture NewTexture(const TextureDescriptor& descriptor);
         SamplerState NewSamplerState(const SamplerDescriptor& descriptor);

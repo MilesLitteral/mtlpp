@@ -5,7 +5,7 @@
 
 #include "function_constant_values.hpp"
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
-#   include <Metal/MTLFunctionConstantValues.h>
+#include <Metal/MTLFunctionConstantValues.h>
 #endif
 
 namespace mtlpp

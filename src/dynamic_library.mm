@@ -6,11 +6,10 @@
 #include "library.hpp"
 #include "device.hpp"
 #include "function_constant_values.hpp"
-#include <Metal/MTLLibrary.h>
+#include <Metal/MTLDynamicLibrary.h>
 
 namespace mtlpp
 {
-
         (id<MTLDevice>)* mtlpp::DynamicLibrary::GetDevice(){
                 Validate();
                 return [(id<MTLDevice> device)m_ptr device]
@@ -23,7 +22,7 @@ namespace mtlpp
 
         NSString* mtlpp::DynamicLibrary::GetLabel(){
                 Validate();
-                return [(NSString dylib)m_ptr label)]
+                return [(NSString dylib)m_ptr label]
         }
 
         void mtlpp::DynamicLibrary::SetLabel(ns::String* _label){

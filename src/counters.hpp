@@ -1,34 +1,34 @@
+#include "ns.hpp"
 
-namespace mtlpp
-{
-//     _MTL_CONST( NS::ErrorDomain, CounterErrorDomain );
-//     _MTL_CONST( CommonCounter, CommonCounterTimestamp );
-//     _MTL_CONST( CommonCounter, CommonCounterTessellationInputPatches );
-//     _MTL_CONST( CommonCounter, CommonCounterVertexInvocations );
-//     _MTL_CONST( CommonCounter, CommonCounterPostTessellationVertexInvocations );
-//     _MTL_CONST( CommonCounter, CommonCounterClipperInvocations );
-//     _MTL_CONST( CommonCounter, CommonCounterClipperPrimitivesOut );
-//     _MTL_CONST( CommonCounter, CommonCounterFragmentInvocations );
-//     _MTL_CONST( CommonCounter, CommonCounterFragmentsPassed );
-//     _MTL_CONST( CommonCounter, CommonCounterComputeKernelInvocations );
-//     _MTL_CONST( CommonCounter, CommonCounterTotalCycles );
-//     _MTL_CONST( CommonCounter, CommonCounterVertexCycles );
-//     _MTL_CONST( CommonCounter, CommonCounterTessellationCycles );
-//     _MTL_CONST( CommonCounter, CommonCounterPostTessellationVertexCycles );
-//     _MTL_CONST( CommonCounter, CommonCounterFragmentCycles );
-//     _MTL_CONST( CommonCounter, CommonCounterRenderTargetWriteCycles );
+namespace mtlpp {
+    //     _MTL_CONST( NS::ErrorDomain, CounterErrorDomain );
+    //     _MTL_CONST( CommonCounter, CommonCounterTimestamp );
+    //     _MTL_CONST( CommonCounter, CommonCounterTessellationInputPatches );
+    //     _MTL_CONST( CommonCounter, CommonCounterVertexInvocations );
+    //     _MTL_CONST( CommonCounter, CommonCounterPostTessellationVertexInvocations );
+    //     _MTL_CONST( CommonCounter, CommonCounterClipperInvocations );
+    //     _MTL_CONST( CommonCounter, CommonCounterClipperPrimitivesOut );
+    //     _MTL_CONST( CommonCounter, CommonCounterFragmentInvocations );
+    //     _MTL_CONST( CommonCounter, CommonCounterFragmentsPassed );
+    //     _MTL_CONST( CommonCounter, CommonCounterComputeKernelInvocations );
+    //     _MTL_CONST( CommonCounter, CommonCounterTotalCycles );
+    //     _MTL_CONST( CommonCounter, CommonCounterVertexCycles );
+    //     _MTL_CONST( CommonCounter, CommonCounterTessellationCycles );
+    //     _MTL_CONST( CommonCounter, CommonCounterPostTessellationVertexCycles );
+    //     _MTL_CONST( CommonCounter, CommonCounterFragmentCycles );
+    //     _MTL_CONST( CommonCounter, CommonCounterRenderTargetWriteCycles );
 
-//     _MTL_CONST( CommonCounterSet, CommonCounterSetTimestamp );
-//     _MTL_CONST( CommonCounterSet, CommonCounterSetStageUtilization );
-//     _MTL_CONST( CommonCounterSet, CommonCounterSetStatistic );
+    //     _MTL_CONST( CommonCounterSet, CommonCounterSetTimestamp );
+    //     _MTL_CONST( CommonCounterSet, CommonCounterSetStageUtilization );
+    //     _MTL_CONST( CommonCounterSet, CommonCounterSetStatistic );
     
-    typedef CommonCounter ns::String*;
+    typedef CommonCounter    ns::String*;
     typedef CommonCounterSet ns::String*;
 
     struct CounterResultTimestamp
     {
         uint64_t timestamp;
-    } 
+    }; 
 
     struct CounterResultStageUtilization
     {
@@ -38,7 +38,7 @@ namespace mtlpp
         uint64_t postTessellationVertexCycles;
         uint64_t fragmentCycles;
         uint64_t renderTargetCycles;
-    } 
+    }; 
 
     struct CounterResultStatistic
     {
@@ -50,7 +50,7 @@ namespace mtlpp
         uint64_t fragmentInvocations;
         uint64_t fragmentsPassed;
         uint64_t computeKernelInvocations;
-    } 
+    }; 
 
     class Counter : public ns::Object
     {
@@ -96,6 +96,5 @@ namespace mtlpp
         CounterSampleBufferErrorOutOfMemory = 0,
         CounterSampleBufferErrorInvalid = 1,
     };
+};
 
-    }
-}

@@ -10,16 +10,6 @@
 
 namespace mtlpp
 {
-    class Device;
-    class CommandQueue;
-    class BlitCommandEncoder;
-    class RenderCommandEncoder;
-    class ParallelRenderCommandEncoder;
-    class ComputeCommandEncoder;
-    class CommandQueue;
-    class Drawable;
-    class RenderPassDescriptor;
-
     enum class CommandBufferStatus
     {
         NotEnqueued = 0,
@@ -42,6 +32,12 @@ namespace mtlpp
         OutOfMemory                               = 8,
         InvalidResource                           = 9,
         Memoryless      MTLPP_AVAILABLE_IOS(10_0) = 10,
+    }
+    MTLPP_AVAILABLE(10_11, 8_0);
+
+    enum class DispatchType {
+        concurrent = 0,
+        serial     = 1
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 

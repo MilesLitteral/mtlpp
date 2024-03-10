@@ -20,8 +20,8 @@ namespace mtlpp
     public:
         HeapDescriptor(const ns::Handle& handle) : ns::Object(handle) { }
 
-        uint32_t     GetSize() const;
-        StorageMode  GetStorageMode() const;
+        uint32_t     GetSize()         const;
+        StorageMode  GetStorageMode()  const;
         CpuCacheMode GetCpuCacheMode() const;
 
         void SetSize(uint32_t size) const;
@@ -35,9 +35,9 @@ namespace mtlpp
     public:
         Heap(const ns::Handle& handle) : ns::Object(handle) { }
 
-        ns::String   GetLabel() const;
-        Device       GetDevice() const;
-        StorageMode  GetStorageMode() const;
+        ns::String   GetLabel()        const;
+        Device       GetDevice()       const;
+        StorageMode  GetStorageMode()  const;
         CpuCacheMode GetCpuCacheMode() const;
         uint32_t     GetSize() const;
         uint32_t     GetUsedSize() const;

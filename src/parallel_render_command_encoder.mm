@@ -3,8 +3,8 @@
  * License: https://github.com/naleksiev/mtlpp/blob/master/LICENSE
  */
 
-#include "parallel_render_command_encoder.hpp"
 #include "render_command_encoder.hpp"
+#include "parallel_render_command_encoder.hpp"
 #include <Metal/MTLParallelRenderCommandEncoder.h>
 
 namespace mtlpp

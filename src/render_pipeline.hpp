@@ -228,7 +228,7 @@ namespace mtlpp
         void                                                    SetLabel(const ns::String* label);
         mtlpp::Function*                                        GetTileFunction();
         void                                                    SetTileFunction(const class Function* tileFunction);
-        NS::UInteger                                            GetRasterSampleCount();
+        ns::UInteger                                            GetRasterSampleCount();
         void                                                    SetRasterSampleCount(unsigned int rasterSampleCount);
 
         TileRenderPipelineColorAttachmentDescriptorArray*       colorAttachments;
@@ -236,14 +236,14 @@ namespace mtlpp
         void                                                    SetThreadgroupSizeMatchesTileSize(bool threadgroupSizeMatchesTileSize);
 
         PipelineBufferDescriptorArray*                          GetTileBuffers;
-        NS::UInteger                                            MaxTotalThreadsPerThreadgroup() const;
-        void                                                    SetMaxTotalThreadsPerThreadgroup(NS::UInteger maxTotalThreadsPerThreadgroup);
+        ns::UInteger                                            MaxTotalThreadsPerThreadgroup() const;
+        void                                                    SetMaxTotalThreadsPerThreadgroup(ns::UInteger maxTotalThreadsPerThreadgroup);
 
         ns::Array<mtlpp::BinaryArchive>*                        GetBinaryArchives();
-        void                                                    SetBinaryArchives(const NS::Array<mtlpp::BinaryArchive>* binaryArchives);
+        void                                                    SetBinaryArchives(const ns::Array<mtlpp::BinaryArchive>* binaryArchives);
 
         ns::Array<mtlpp::Library>*                              GetPreloadedLibraries();
-        void                                                    SetPreloadedLibraries(const NS::Array* preloadedLibraries);
+        void                                                    SetPreloadedLibraries(const ns::Array* preloadedLibraries);
 
         mtlpp::LinkedFunctions*                                 GetLinkedFunctions();
         void                                                    SetLinkedFunctions(const class LinkedFunctions* linkedFunctions);

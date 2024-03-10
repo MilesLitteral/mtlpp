@@ -11,8 +11,7 @@ namespace CA
             class MetalLayer* layer();
             mtlpp::Texture*   texture();
 
-
-        CA::MetalLayer* CA::MetalDrawable::layer()
+        CA::MetalLayer* CA::MetalDrawable::layer();
         mtlpp::Texture* CA::MetalDrawable::texture();
     };
 }

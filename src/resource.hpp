@@ -22,7 +22,7 @@ namespace mtlpp
         NonVolatile = 2,
         Volatile    = 3,
         Empty       = 4,
-    }
+    } 
     MTLPP_AVAILABLE(10_11, 8_0);
 
     enum class CpuCacheMode
@@ -38,7 +38,7 @@ namespace mtlpp
         Managed    MTLPP_AVAILABLE(10_11, NA) = 1,
         Private                               = 2,
         Memoryless MTLPP_AVAILABLE(NA, 10_0)  = 3,
-    }
+    }; 
     MTLPP_AVAILABLE(10_11, 9_0);
 
     enum class ResourceOptions
@@ -55,7 +55,7 @@ namespace mtlpp
 
         OptionCpuCacheModeDefault                               = CpuCacheModeDefaultCache,
         OptionCpuCacheModeWriteCombined                         = CpuCacheModeWriteCombined,
-    }
+    };
     MTLPP_AVAILABLE(10_11, 8_0);
 
     class Resource : public ns::Object

@@ -10,8 +10,7 @@
 
 namespace mtlpp
 {
-    VertexAttribute::VertexAttribute() :
-        ns::Object(ns::Handle{ (__bridge void*)[[MTLVertexAttribute alloc] init] })
+    VertexAttribute::VertexAttribute() : ns::Object(ns::Handle{ (__bridge void*)[[MTLVertexAttribute alloc] init] })
     {
     }
 

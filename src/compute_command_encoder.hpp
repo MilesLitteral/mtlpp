@@ -8,8 +8,8 @@
 #include "defines.hpp"
 #include "ns.hpp"
 #include "command_encoder.hpp"
-#include "texture.hpp"
 #include "command_buffer.hpp"
+#include "texture.hpp"
 #include "fence.hpp"
 
 namespace mtlpp
@@ -37,6 +37,7 @@ namespace mtlpp
         void DispatchThreadgroupsWithIndirectBuffer(const Buffer& indirectBuffer, uint32_t indirectBufferOffset, const Size& threadsPerThreadgroup);
         void UpdateFence(const Fence& fence) MTLPP_AVAILABLE_IOS(10_0);
         void WaitForFence(const Fence& fence) MTLPP_AVAILABLE_IOS(10_0);
+        void useResource(mtlpp::Resource resource, mtlpp::ResourceUsage usage);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 }

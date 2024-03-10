@@ -156,6 +156,18 @@ namespace mtlpp
         };
     }
 
+    IndirectCommandBuffer Device::makeIndirectCommandBuffer(IndirectCommandBufferDescriptor descriptor, int maxCommandCount, ResourceOptions options)
+    {
+        Validate();
+        return ns::Handl{
+            (__bridge void*)[(__bridge id<MTLDevice>)m_ptr makeIndirectCommandBuffer(
+                descriptor: descriptor, //MTLIndirectCommandBufferDescriptor,
+                maxCount:maxCommandCount,
+                options:options
+            )]
+        }
+    }
+
     DepthStencilState Device::NewDepthStencilState(const DepthStencilDescriptor& descriptor)
     {
         Validate();

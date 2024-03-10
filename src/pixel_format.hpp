@@ -12,7 +12,6 @@ namespace mtlpp
     enum class PixelFormat
     {
         Invalid                                            = 0,
-
         A8Unorm                                            = 1,
 
         R8Unorm                                            = 10,
